@@ -1,15 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://fox2049.github.io</id>
-    <title>ADA</title>
-    <updated>2021-04-03T10:18:29.650Z</updated>
+    <title>fox2049</title>
+    <updated>2021-04-03T10:19:08.751Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://fox2049.github.io"/>
     <link rel="self" href="https://fox2049.github.io/atom.xml"/>
     <subtitle>Art &amp; Design with AI</subtitle>
     <logo>https://fox2049.github.io/images/avatar.png</logo>
     <icon>https://fox2049.github.io/favicon.ico</icon>
-    <rights>All rights reserved 2021, ADA</rights>
+    <rights>All rights reserved 2021, fox2049</rights>
     <entry>
         <title type="html"><![CDATA[Hello Gridea]]></title>
         <id>https://fox2049.github.io/post/hello-gridea/</id>
