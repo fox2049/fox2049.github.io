@@ -2,25 +2,25 @@
   <head>
     <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>Gan实战 | fox2049</title>
-<link rel="shortcut icon" href="https://fox2049.github.io/favicon.ico?v=1617452791292">
+<title>Gan 实战 | fox2049</title>
+<link rel="shortcut icon" href="https://fox2049.github.io/favicon.ico?v=1617504701565">
 <link href="https://cdn.jsdelivr.net/npm/remixicon@2.3.0/fonts/remixicon.css" rel="stylesheet">
 <link rel="stylesheet" href="https://fox2049.github.io/styles/main.css">
-<link rel="alternate" type="application/atom+xml" title="Gan实战 | fox2049 - Atom Feed" href="https://fox2049.github.io/atom.xml">
+<link rel="alternate" type="application/atom+xml" title="Gan 实战 | fox2049 - Atom Feed" href="https://fox2049.github.io/atom.xml">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Droid+Serif:400,700">
 
 
 
-    <meta name="description" content="导论
+    <meta name="description" content="如何构建 GAN
+如何处理 GAN 的渐进式增长
+GAN 的实际应用有哪些
+如何为所构建的系统排除故障
+
+导论
 GAN简介
 传统机器学习算法擅长识别已有数据中的模式：分类、回归……
-generative-adversarial-network
-何时停止循环
-零和博弈--纳什均衡点：
-1. 生成的和真实的一样了
-
-2. 鉴别器智能随机猜测真实性了..." />
-    <meta name="keywords" content="book,gan,ai" />
+generative-adversarial-networ..." />
+    <meta name="keywords" content="Generative Adversarial Networks,book" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
     <script src="https://cdn.bootcss.com/highlight.js/9.12.0/highlight.min.js"></script>
   </head>
@@ -29,7 +29,7 @@ generative-adversarial-network
       <div class="main-content">
         <div class="site-header">
   <a href="https://fox2049.github.io">
-  <img class="avatar" src="https://fox2049.github.io/images/avatar.png?v=1617452791292" alt="">
+  <img class="avatar" src="https://fox2049.github.io/images/avatar.png?v=1617504701565" alt="">
   </a>
   <h1 class="site-title">
     fox2049
@@ -82,7 +82,7 @@ generative-adversarial-network
         <div class="post-detail">
           <article class="post">
             <h2 class="post-title">
-              Gan实战
+              Gan 实战
             </h2>
             <div class="post-info">
               <span>
@@ -92,32 +92,37 @@ generative-adversarial-network
                 3 min read
               </span>
               
+                <a href="https://fox2049.github.io/tag/LB4hbMqt1/" class="post-tag">
+                  # Generative Adversarial Networks
+                </a>
+              
                 <a href="https://fox2049.github.io/tag/5aCSxOJnF/" class="post-tag">
                   # book
-                </a>
-              
-                <a href="https://fox2049.github.io/tag/9ZOlYmSMgm/" class="post-tag">
-                  # gan
-                </a>
-              
-                <a href="https://fox2049.github.io/tag/T04CQ5PtNC/" class="post-tag">
-                  # ai
                 </a>
               
             </div>
             
             <div class="post-content-wrapper">
               <div class="post-content">
-                <h1 id="导论">导论</h1>
+                <p>如何构建 GAN</p>
+<p>如何处理 GAN 的渐进式增长</p>
+<p>GAN 的实际应用有哪些</p>
+<p>如何为所构建的系统排除故障</p>
+<!-- more -->
+<h1 id="导论">导论</h1>
 <h2 id="gan简介">GAN简介</h2>
 <p>传统机器学习算法擅长识别已有数据中的模式：分类、回归……</p>
 <p>generative-adversarial-network</p>
 <h3 id="何时停止循环">何时停止循环</h3>
 <p>零和博弈--纳什均衡点：</p>
-<pre><code>1. 生成的和真实的一样了
-
-2. 鉴别器智能随机猜测真实性了（真的概率为50%）
-</code></pre>
+<ol>
+<li>
+<p>生成的和真实的一样了</p>
+</li>
+<li>
+<p>鉴别器智能随机猜测真实性了（真的概率为50%）</p>
+</li>
+</ol>
 <p>GAN从而就收敛了，现实中GAN几乎不能达到纳什均衡</p>
 <h3 id="生成手写数字">生成手写数字</h3>
 <p>生成器：学习合成这些模式而不是识别这些模式</p>
