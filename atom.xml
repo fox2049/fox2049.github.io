@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://fox2049.github.io</id>
     <title>fox2049</title>
-    <updated>2021-04-05T07:08:18.025Z</updated>
+    <updated>2021-04-05T07:17:08.159Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://fox2049.github.io"/>
     <link rel="self" href="https://fox2049.github.io/atom.xml"/>
@@ -123,14 +123,14 @@ s-65,47,-65,47z M834 80H400000v40H845z'/></svg></span></span></span><span class=
         <link href="https://fox2049.github.io/post/academic-process/">
         </link>
         <updated>2021-04-03T10:47:02.000Z</updated>
-        <summary type="html"><![CDATA[<h1 id="week-6">Week 6</h1>
-<p>📔 <a href="https://fox2049.github.io/post/gan-shi-zhan/">GANs in Action</a><br>
-📄 <a href="https://fox2049.github.io/post/gan-inversion-a-survey">GAN Inversion: A Survey</a></p>
+        <summary type="html"><![CDATA[<p>book and paper reading list</p>
 ]]></summary>
-        <content type="html"><![CDATA[<h1 id="week-6">Week 6</h1>
-<p>📔 <a href="https://fox2049.github.io/post/gan-shi-zhan/">GANs in Action</a><br>
-📄 <a href="https://fox2049.github.io/post/gan-inversion-a-survey">GAN Inversion: A Survey</a></p>
+        <content type="html"><![CDATA[<p>book and paper reading list</p>
 <!-- more -->
+<h1 id="week-6">Week 6</h1>
+<p>📔 <a href="https://fox2049.github.io/post/gan-shi-zhan/">GANs in Action</a><br>
+📄 <a href="https://fox2049.github.io/post/gan-inversion-a-survey">GAN Inversion: A Survey</a><br>
+📔[Deep Learning]</p>
 ]]></content>
     </entry>
 </feed>
