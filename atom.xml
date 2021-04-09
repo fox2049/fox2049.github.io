@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://fox2049.github.io</id>
     <title>fox2049</title>
-    <updated>2021-04-09T02:51:44.354Z</updated>
+    <updated>2021-04-09T03:01:47.066Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://fox2049.github.io"/>
     <link rel="self" href="https://fox2049.github.io/atom.xml"/>
@@ -17,10 +17,12 @@
         </link>
         <updated>2021-04-03T10:47:02.000Z</updated>
         <content type="html"><![CDATA[<h1 id="week-6202145">Week 6（2021/4/5）</h1>
-<p>📔 <a href="https://github.com/fox2049/notebook/blob/master/reading/book/GANs%20in%20Action.md">GANs in Action</a><br>
-📄 <a href="https://github.com/fox2049/notebook/blob/master/reading/paper/GAN%20Inversion:%20A%20Survey.md">GAN Inversion: A Survey</a><br>
-📔<a href="">Deep Learning</a><br>
-📔<a href="https://github.com/fox2049/notebook/blob/master/reading/book/AI%E6%94%B9%E5%8F%98%E8%AE%BE%E8%AE%A1.md">AI改变设计——人工智能时代的设计师生存手册</a></p>
+<h2 id="books">📔 Books</h2>
+<p><a href="https://github.com/fox2049/notebook/blob/master/reading/book/GANs%20in%20Action.md">GANs in Action</a><br>
+<a href="">Deep Learning</a><br>
+<a href="https://github.com/fox2049/notebook/blob/master/reading/book/AI%E6%94%B9%E5%8F%98%E8%AE%BE%E8%AE%A1.md">AI改变设计——人工智能时代的设计师生存手册</a></p>
+<h2 id="papers">📄 Papers</h2>
+<p><a href="https://github.com/fox2049/notebook/blob/master/reading/paper/GAN%20Inversion:%20A%20Survey.md">GAN Inversion: A Survey</a></p>
 ]]></content>
     </entry>
 </feed>
