@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://fox2049.github.io</id>
     <title>fox2049</title>
-    <updated>2021-04-08T14:54:06.179Z</updated>
+    <updated>2021-04-09T01:59:32.786Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://fox2049.github.io"/>
     <link rel="self" href="https://fox2049.github.io/atom.xml"/>
@@ -16,10 +16,13 @@
         <link href="https://fox2049.github.io/post/ai-gai-bian-she-ji-ren-gong-zhi-neng-shi-dai-de-she-ji-shi-sheng-cun-shou-ce/">
         </link>
         <updated>2021-04-08T12:32:30.000Z</updated>
-        <content type="html"><![CDATA[<p>当下，人工智能快速发展，人们再次被担心职业被取代的问题。哪怕是以人为本、带来美感和灵感创作的设计领域都岌岌可危。</p>
+        <summary type="html"><![CDATA[<p>人工智能会取代设计师还是会成为更强大的设计辅助工具。</p>
+]]></summary>
+        <content type="html"><![CDATA[<p>人工智能会取代设计师还是会成为更强大的设计辅助工具。</p>
+<!-- more -->
+<p>当下，人工智能快速发展，人们再次被担心职业被取代的问题。哪怕是以人为本、带来美感和灵感创作的设计领域都岌岌可危。</p>
 <p>设计作为科技、人文与商业交叉领域的学科，真收到人工智能再次兴起的影响。</p>
 <p>2017年阿里智能设计实验室退出的“鹿班”系统。</p>
-<p>人工智能会取代设计师还是会成为更强大的设计辅助工具。</p>
 <p>人工智能已逐步演变成创新的基础设施，也将成为设计师的主力和伙伴，一部分重复性的劳动及海量的数据分析工作都可以由人工智能协助，设计师可以有更多的精力侧重于评价、判断和选择，由此使自己成为根据个性话的创造离、应对复杂问题识别机会的能力、批判性思维能力。，以上将成为设计师着力发展的核心。</p>
 <p>dell公司EMC服务的首席技术官bill Schmarzo结合机器学习提出了分析、合成、设想、调优、验证的设计步骤，这与IDEO提出的设计思维有很大的契合点。</p>
 <p>对设计而言，人工智能将是一种新的思考方式，也是一种新的实现手段。</p>
@@ -75,13 +78,15 @@
 <p>人工智能只能依赖数据和经验解决问题，他能解决大部分智力可以解决的问题，但解决不了大部分需要推理、情感和美感才能解决的问题。</p>
 <p>Max tegmark - 人类能力地形图。</p>
 <h3 id="ai时代下设计师的机遇与挑战">AI时代下设计师的机遇与挑战</h3>
-<h4 id="将经验转化为更多的价值">将经验转化为更多的价值</h4>
-<p>####掌握更多设计技能<br>
-####结合AI进行思考与设计<br>
-####深耕艺术设计<br>
-####个性化设计<br>
-####学会跨界思考<br>
-科学和艺术是可以并且很有必要相通与交融的</p>
+<ul>
+<li>将经验转化为更多的价值</li>
+<li>掌握更多设计技能</li>
+<li>结合AI进行思考与设计</li>
+<li>深耕艺术设计</li>
+<li>个性化设计</li>
+<li>学会跨界思考</li>
+</ul>
+<p>科学和艺术是可以并且很有必要相通与交融的</p>
 <p>阿里巴巴和guess合作的FashionAI</p>
 ]]></content>
     </entry>
