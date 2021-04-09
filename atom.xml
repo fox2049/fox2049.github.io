@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://fox2049.github.io</id>
     <title>fox2049</title>
-    <updated>2021-04-09T02:03:19.463Z</updated>
+    <updated>2021-04-09T02:05:57.777Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://fox2049.github.io"/>
     <link rel="self" href="https://fox2049.github.io/atom.xml"/>
@@ -96,10 +96,7 @@
         <link href="https://fox2049.github.io/post/gan-inversion-a-survey/">
         </link>
         <updated>2021-04-03T12:23:15.000Z</updated>
-        <summary type="html"><![CDATA[<p>GAN inversion aims to invert a given image back into the latent space of a pretrained GAN model, for the image to be faithfully reconstructed from the inverted code by the generator.</p>
-]]></summary>
         <content type="html"><![CDATA[<p>GAN inversion aims to invert a given image back into the latent space of a pretrained GAN model, for the image to be faithfully reconstructed from the inverted code by the generator.</p>
-<!-- more -->
 ]]></content>
     </entry>
     <entry>
@@ -108,17 +105,7 @@
         <link href="https://fox2049.github.io/post/gan-shi-zhan/">
         </link>
         <updated>2021-04-03T12:14:23.000Z</updated>
-        <summary type="html"><![CDATA[<p>如何构建 GAN</p>
-<p>如何处理 GAN 的渐进式增长</p>
-<p>GAN 的实际应用有哪些</p>
-<p>如何为所构建的系统排除故障</p>
-]]></summary>
-        <content type="html"><![CDATA[<p>如何构建 GAN</p>
-<p>如何处理 GAN 的渐进式增长</p>
-<p>GAN 的实际应用有哪些</p>
-<p>如何为所构建的系统排除故障</p>
-<!-- more -->
-<h1 id="导论">导论</h1>
+        <content type="html"><![CDATA[<h1 id="导论">导论</h1>
 <h2 id="gan简介">GAN简介</h2>
 <p>传统机器学习算法擅长识别已有数据中的模式：分类、回归……</p>
 <p>generative-adversarial-network</p>
@@ -203,15 +190,11 @@ s-65,47,-65,47z M834 80H400000v40H845z'/></svg></span></span></span><span class=
         <link href="https://fox2049.github.io/post/academic-process/">
         </link>
         <updated>2021-04-03T10:47:02.000Z</updated>
-        <summary type="html"><![CDATA[<p>book and paper reading list</p>
-]]></summary>
-        <content type="html"><![CDATA[<p>book and paper reading list</p>
-<!-- more -->
-<h1 id="week-6">Week 6</h1>
+        <content type="html"><![CDATA[<h1 id="week-6202145">Week 6（2021/4/5）</h1>
 <p>📔 <a href="https://fox2049.github.io/post/gan-shi-zhan/">GANs in Action</a><br>
 📄 <a href="https://fox2049.github.io/post/gan-inversion-a-survey">GAN Inversion: A Survey</a><br>
 📔[Deep Learning]<br>
-📔<a href="">AI改变设计——人工智能时代的设计师生存手册</a></p>
+📔<a href="https://fox2049.github.io/post/ai-gai-bian-she-ji-ren-gong-zhi-neng-shi-dai-de-she-ji-shi-sheng-cun-shou-ce">AI改变设计——人工智能时代的设计师生存手册</a></p>
 ]]></content>
     </entry>
 </feed>
