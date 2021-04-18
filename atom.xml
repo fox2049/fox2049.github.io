@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://fox2049.github.io</id>
     <title>fox2049</title>
-    <updated>2021-04-17T11:28:44.537Z</updated>
+    <updated>2021-04-18T15:04:36.012Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://fox2049.github.io"/>
     <link rel="self" href="https://fox2049.github.io/atom.xml"/>
@@ -10,6 +10,31 @@
     <logo>https://fox2049.github.io/images/avatar.png</logo>
     <icon>https://fox2049.github.io/favicon.ico</icon>
     <rights>All rights reserved 2021, fox2049</rights>
+    <entry>
+        <title type="html"><![CDATA[Gatys 风格迁移详解]]></title>
+        <id>https://fox2049.github.io/post/feng-ge-qian-yi-loss-han-shu-xiang-jie/</id>
+        <link href="https://fox2049.github.io/post/feng-ge-qian-yi-loss-han-shu-xiang-jie/">
+        </link>
+        <updated>2021-04-18T14:22:39.000Z</updated>
+        <content type="html"><![CDATA[<p>Gatys 等人发表的 <a href="https://ieeexplore.ieee.org/document/7780634">'Image Style Transfer Using Convolutional Neural Networks'</a> 使用了 CNN 来进行图像风格迁移，引起了风格迁移研究的浪潮，后面也相继产生了迁移效果和时间都更佳的方式。不过，这篇论文仍是入门风格迁移不可忽略的存在。</p>
+<p>Gatys 所用的方法为图像生成式的风格迁移方法，就是通过将一张噪音图片（可以理解成老式电视机的雪花画面）与两张图片进行对比，这两张图片分别为风格的来源（风格图）、内容的来源（内容图），根据对比的结果进行更新迭代。随机噪音图从而逐渐变化为一张“风格迁移”的图片，即包含风格图的风格又包含内容图的内容。这时就有有两个问题：</p>
+<ol>
+<li>为什么这样进行对比？</li>
+<li>如何量化图片间的差异？</li>
+</ol>
+<h1 id="why">WHY</h1>
+<figure data-type="image" tabindex="1"><img src="https://fox2049.github.io/post-images/1618758169641.png" alt="" loading="lazy"></figure>
+<p>上图直观的表达出了图像在不同层的表现。Gatys 用了比较成熟的 VGG-19 作为 CNN，这个 CNN 有个非常奇妙的特性：</p>
+<ul>
+<li>内容层面：网络的底层特征更多的表现输入图像的像素信息，而高层特征更多的表现图像的物体和布局信息，通俗的来讲就是仅能够根据形状和位置判断图像信息，纹理和颜色信息丢失的比较严重。</li>
+<li>风格层面：网络的不同层表现出不同的风格特征，具有不同的风格特点。当然，这里 Gatys 做了一个假设，图片的风格就是图像的纹理和颜色特征。至于图片的风格究竟是什么，这就是另外一个话题了。</li>
+</ul>
+<p>根据以上两个特性，噪音图像就有了可以对比和参考的对象。内容上选取一个高层的输出与“噪音图”进行对比，风格上使用多层的特征进行对比，最后加权确定图片的差异。</p>
+<h1 id="how">HOW</h1>
+<figure data-type="image" tabindex="2"><img src="https://fox2049.github.io/post-images/1618758250529.png" alt="" loading="lazy"></figure>
+<p>上图是论文中最为重要的一张图</p>
+]]></content>
+    </entry>
     <entry>
         <title type="html"><![CDATA[GAN 的数学表示与推导]]></title>
         <id>https://fox2049.github.io/post/math-under-gan/</id>
