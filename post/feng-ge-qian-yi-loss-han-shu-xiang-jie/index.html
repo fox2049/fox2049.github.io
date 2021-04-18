@@ -3,7 +3,7 @@
     <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Gatys 风格迁移详解 | fox2049</title>
-<link rel="shortcut icon" href="https://fox2049.github.io/favicon.ico?v=1618759599875">
+<link rel="shortcut icon" href="https://fox2049.github.io/favicon.ico?v=1618759958245">
 <link href="https://cdn.jsdelivr.net/npm/remixicon@2.3.0/fonts/remixicon.css" rel="stylesheet">
 <link rel="stylesheet" href="https://fox2049.github.io/styles/main.css">
 <link rel="alternate" type="application/atom+xml" title="Gatys 风格迁移详解 | fox2049 - Atom Feed" href="https://fox2049.github.io/atom.xml">
@@ -21,7 +21,7 @@
       <div class="main-content">
         <div class="site-header">
   <a href="https://fox2049.github.io">
-  <img class="avatar" src="https://fox2049.github.io/images/avatar.png?v=1618759599875" alt="">
+  <img class="avatar" src="https://fox2049.github.io/images/avatar.png?v=1618759958245" alt="">
   </a>
   <h1 class="site-title">
     fox2049
@@ -137,7 +137,7 @@ c-16-25.333-24-45-24-59z'/></svg></span></span></span></span><span class="vlist-
 -7 1c-4.667 0-9.167-1.833-13.5-5.5S337 184 337 178c0-12.667 15.667-32.333 47-59
 H213l-171-1c-8.667-6-13-12.333-13-19 0-4.667 4.333-11.333 13-20h359
 c-16-25.333-24-45-24-59z'/></svg></span></span></span></span></span></span></span></span></span></span> 为噪音图片也是最终要生成的“风格迁移”图片。分别通过 VGG-19 网络。</p>
-<h1 id="内容差异">内容差异</h1>
+<h2 id="内容差异">内容差异</h2>
 <p>内容差异相对比较简单，只需要关注选出的那一层 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>l</mi></mrow><annotation encoding="application/x-tex">l</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.69444em;vertical-align:0em;"></span><span class="mord mathdefault" style="margin-right:0.01968em;">l</span></span></span></span> ，将 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mover accent="true"><mi>p</mi><mo>⃗</mo></mover></mrow><annotation encoding="application/x-tex">\vec{p}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.9084399999999999em;vertical-align:-0.19444em;"></span><span class="mord accent"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.714em;"><span style="top:-3em;"><span class="pstrut" style="height:3em;"></span><span class="mord"><span class="mord mathdefault">p</span></span></span><span style="top:-3em;"><span class="pstrut" style="height:3em;"></span><span class="accent-body" style="left:-0.15216em;"><span class="overlay" style="height:0.714em;width:0.471em;"><svg width='0.471em' height='0.714em' style='width:0.471em' viewBox='0 0 471 714' preserveAspectRatio='xMinYMin'><path d='M377 20c0-5.333 1.833-10 5.5-14S391 0 397 0c4.667 0 8.667 1.667 12 5
 3.333 2.667 6.667 9 10 19 6.667 24.667 20.333 43.667 41 57 7.333 4.667 11
 10.667 11 18 0 6-1 10-3 12s-6.667 5-14 9c-28.667 14.667-53.667 35.667-75 63
@@ -156,8 +156,11 @@ c-16-25.333-24-45-24-59z'/></svg></span></span></span></span></span></span></spa
               <div class="toc-container">
                 <ul class="markdownIt-TOC">
 <li><a href="#why">WHY</a></li>
-<li><a href="#how">HOW</a></li>
+<li><a href="#how">HOW</a>
+<ul>
 <li><a href="#%E5%86%85%E5%AE%B9%E5%B7%AE%E5%BC%82">内容差异</a></li>
+</ul>
+</li>
 </ul>
 
               </div>
