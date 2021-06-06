@@ -2,18 +2,18 @@
   <head>
     <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>GAN 与其它生成模型的异同 | fox2049</title>
-<link rel="shortcut icon" href="https://fox2049.github.io/favicon.ico?v=1622189476746">
+<title>用于服装风格生成的深度学习 | fox2049</title>
+<link rel="shortcut icon" href="https://fox2049.github.io/favicon.ico?v=1622989342856">
 <link href="https://cdn.jsdelivr.net/npm/remixicon@2.3.0/fonts/remixicon.css" rel="stylesheet">
 <link rel="stylesheet" href="https://fox2049.github.io/styles/main.css">
-<link rel="alternate" type="application/atom+xml" title="GAN 与其它生成模型的异同 | fox2049 - Atom Feed" href="https://fox2049.github.io/atom.xml">
+<link rel="alternate" type="application/atom+xml" title="用于服装风格生成的深度学习 | fox2049 - Atom Feed" href="https://fox2049.github.io/atom.xml">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Droid+Serif:400,700">
 
 
 
-    <meta name="description" content="生成模型不是简单的生成数据的模型，生成数据只是生成模型的一种任务。生成模型关注点是样本分布本身，对样本本身进行建模，可以进行监督学习的任务，也可以进行非监督学习的任务。
-生成模型{监督模型{非监督模型 生成模型\left\{
-\begin{..." />
+    <meta name="description" content="原文链接：https://ieeexplore.ieee.org/document/9364874
+摘要
+本文我们使用深度神经网络算法生成风格服装图片，输入一张服装图片以及另外一张或者多张的风格图片（例如花朵，青花瓷等），进而生成一种风格或..." />
     <meta name="keywords" content="" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
     <script src="https://cdn.bootcss.com/highlight.js/9.12.0/highlight.min.js"></script>
@@ -23,7 +23,7 @@
       <div class="main-content">
         <div class="site-header">
   <a href="https://fox2049.github.io">
-  <img class="avatar" src="https://fox2049.github.io/images/avatar.png?v=1622189476746" alt="">
+  <img class="avatar" src="https://fox2049.github.io/images/avatar.png?v=1622989342856" alt="">
   </a>
   <h1 class="site-title">
     fox2049
@@ -74,7 +74,7 @@
         <div class="post-detail">
           <article class="post">
             <h2 class="post-title">
-              GAN 与其它生成模型的异同
+              用于服装风格生成的深度学习
             </h2>
             <div class="post-info">
               <span>
@@ -88,18 +88,16 @@
             
             <div class="post-content-wrapper">
               <div class="post-content">
-                <p>生成模型不是简单的生成数据的模型，生成数据只是生成模型的一种任务。生成模型关注点是样本分布本身，对样本本身进行建模，可以进行监督学习的任务，也可以进行非监督学习的任务。</p>
-<p class='katex-block'><span class="katex-display"><span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi mathvariant="normal">生</mi><mi mathvariant="normal">成</mi><mi mathvariant="normal">模</mi><mi mathvariant="normal">型</mi><mrow><mo fence="true">{</mo><mtable><mtr><mtd><mstyle scriptlevel="0" displaystyle="true"><mrow><mi mathvariant="normal">监</mi><mi mathvariant="normal">督</mi><mi mathvariant="normal">模</mi><mi mathvariant="normal">型</mi><mo fence="true">{</mo></mrow></mstyle></mtd></mtr><mtr><mtd><mstyle scriptlevel="0" displaystyle="true"><mrow><mi mathvariant="normal">非</mi><mi mathvariant="normal">监</mi><mi mathvariant="normal">督</mi><mi mathvariant="normal">模</mi><mi mathvariant="normal">型</mi></mrow></mstyle></mtd></mtr></mtable></mrow></mrow><annotation encoding="application/x-tex"> 生成模型\left\{
-\begin{aligned}
-监督模型 \left\{\right.\\
-非监督模型 \\
-\end{aligned}
-\right.
-</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:3.00003em;vertical-align:-1.25003em;"></span><span class="mord cjk_fallback">生</span><span class="mord cjk_fallback">成</span><span class="mord cjk_fallback">模</span><span class="mord cjk_fallback">型</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="minner"><span class="mopen delimcenter" style="top:0em;"><span class="delimsizing size4">{</span></span><span class="mord"><span class="mtable"><span class="col-align-r"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:1.7500000000000002em;"><span style="top:-3.91em;"><span class="pstrut" style="height:3em;"></span><span class="mord"><span class="mord cjk_fallback">监</span><span class="mord cjk_fallback">督</span><span class="mord cjk_fallback">模</span><span class="mord cjk_fallback">型</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="minner"><span class="mopen delimcenter" style="top:0em;">{</span><span class="mclose nulldelimiter"></span></span></span></span><span style="top:-2.41em;"><span class="pstrut" style="height:3em;"></span><span class="mord"><span class="mord cjk_fallback">非</span><span class="mord cjk_fallback">监</span><span class="mord cjk_fallback">督</span><span class="mord cjk_fallback">模</span><span class="mord cjk_fallback">型</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:1.2500000000000002em;"><span></span></span></span></span></span></span></span><span class="mclose nulldelimiter"></span></span></span></span></span></span></p>
+                <p>原文链接：https://ieeexplore.ieee.org/document/9364874</p>
+<h1 id="摘要">摘要</h1>
+<p>本文我们使用深度神经网络算法生成风格服装图片，输入一张服装图片以及另外一张或者多张的风格图片（例如花朵，青花瓷等），进而生成一种风格或者多种风格混合的图片。这是一项充满挑战的任务，因为既需要保留整体的服装图案来达到对部分区域的忠诚，同时也要遵从特定的区域使用不同的风格。为了应对这个挑战，我们提出了一个服装风格生成器（FashionG）框架用于单风格的生成，以及一个限制空间的FashionG（SC-FashionG）框架用于生成和混合风格的生成。</p>
 
               </div>
               <div class="toc-container">
-                
+                <ul class="markdownIt-TOC">
+<li><a href="#%E6%91%98%E8%A6%81">摘要</a></li>
+</ul>
+
               </div>
             </div>
           </article>
