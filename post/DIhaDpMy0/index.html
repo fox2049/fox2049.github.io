@@ -2,27 +2,17 @@
   <head>
     <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>Schedule | fox2049</title>
+<title>理解PatchGAN | fox2049</title>
 <link rel="shortcut icon" href="https://fox2049.github.io/favicon.ico?v=1628582970307">
 <link href="https://cdn.jsdelivr.net/npm/remixicon@2.3.0/fonts/remixicon.css" rel="stylesheet">
 <link rel="stylesheet" href="https://fox2049.github.io/styles/main.css">
-<link rel="alternate" type="application/atom+xml" title="Schedule | fox2049 - Atom Feed" href="https://fox2049.github.io/atom.xml">
+<link rel="alternate" type="application/atom+xml" title="理解PatchGAN | fox2049 - Atom Feed" href="https://fox2049.github.io/atom.xml">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Droid+Serif:400,700">
 
 
 
-    <meta name="description" content="Week 6（2021/4/5）
-📔 Books
-
-GANs in Action
-Deep Learning
-AI改变设计——人工智能时代的设计师生存手册
-
-📄 Papers
-
-GAN Inversion: A Survey
-
-Week..." />
+    <meta name="description" content="原文：https://sahiltinky94.medium.com/understanding-patchgan-9f3c8380c207
+这篇文章分享了作者对PatchGAN的理解，以及PatchGAN与平常的CNN有何不同，如何根据既..." />
     <meta name="keywords" content="" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
     <script src="https://cdn.bootcss.com/highlight.js/9.12.0/highlight.min.js"></script>
@@ -83,61 +73,50 @@ Week..." />
         <div class="post-detail">
           <article class="post">
             <h2 class="post-title">
-              Schedule
+              理解PatchGAN
             </h2>
             <div class="post-info">
               <span>
-                2021-04-03
+                2021-08-10
               </span>
               <span>
-                1 min read
+                2 min read
               </span>
               
             </div>
             
             <div class="post-content-wrapper">
               <div class="post-content">
-                <h1 id="week-6202145">Week 6（2021/4/5）</h1>
-<h2 id="books">📔 Books</h2>
-<ol>
-<li>GANs in Action</li>
-<li>Deep Learning</li>
-<li>AI改变设计——人工智能时代的设计师生存手册</li>
+                <p>原文：https://sahiltinky94.medium.com/understanding-patchgan-9f3c8380c207</p>
+<p>这篇文章分享了作者对PatchGAN的理解，以及PatchGAN与平常的CNN有何不同，如何根据既有的结构确定patch的尺寸。阅读之前，你需要先了解CNN以及GAN。</p>
+<h1 id="资料">资料</h1>
+<p>patchGAN经常用做判别器<sup class="footnote-ref"><a href="#fn1" id="fnref1">[1]</a></sup><sup class="footnote-ref"><a href="#fn2" id="fnref2">[2]</a></sup>，会让很多人难以理解。文章作者是这么回复的：</p>
+<blockquote>
+<p>实际上，PatchGAN就是一个卷积神经网络，或者你也可以说，所有的卷积网络都是Patch网络，卷积的过程是对每张图片按照patch独立且一致的处理过程，这极大的节省了参数、时间和存储空间，重要的是，它非常有效。<br>
+PatchGAN和平常GAN的区别在于，平常的GAN输出的是一个标量，例如“真”或者“假”， 而PatchGAN则输出一个矩阵，每隔元素都代表着当前Patch的“真”或者“假”，根据输出矩阵每隔元素的定位，可以找到其在输入图像中对应的感受野，即Patch。这在数学上也相当于我们把图片进行手动裁切后再进行输入的结果，一般情况下，我们对所输出的patch的结果求其平均值，作为其结果。</p>
+</blockquote>
+<p>这样，我们就可以理解PatchGAN和CNN的区别和联系了。如下图所示：</p>
+<figure data-type="image" tabindex="1"><img src="https://fox2049.github.io/post-images/1628582654222.png" alt="" loading="lazy"></figure>
+<h1 id="但是">但是</h1>
+<p>输出的每个向量是如何对应原图中70x70的感受野的呢？请参考下图，按照256x256的原图尺寸为例建立PatchGAN的结构：<br>
+<img src="https://fox2049.github.io/post-images/1628582812739.png" alt="" loading="lazy"></p>
+<p>注意，途中没有画出每层具体的特征层的3D图，请自行想象。<br>
+你所需要记住的就是特征层的层数，卷积核的尺寸，步长以及padding的值。</p>
+<hr class="footnotes-sep">
+<section class="footnotes">
+<ol class="footnotes-list">
+<li id="fn1" class="footnote-item"><p><a href="https://arxiv.org/pdf/1611.07004.pdf">Image-to-Image Translation with Conditional Adversarial Networks</a> <a href="#fnref1" class="footnote-backref">↩︎</a></p>
+</li>
+<li id="fn2" class="footnote-item"><p><a href="https://arxiv.org/pdf/1703.10593.pdf">Unpaired image-to-image Translation using Cycle-Consistent Adversarial Networks</a> <a href="#fnref2" class="footnote-backref">↩︎</a></p>
+</li>
 </ol>
-<h2 id="papers">📄 Papers</h2>
-<ol>
-<li>GAN Inversion: A Survey</li>
-</ol>
-<h1 id="week-72021412">Week 7（2021/4/12）</h1>
-<h2 id="courses">🏫 Courses</h2>
-<ol>
-<li>GAN by Hung-yi Lee</li>
-<li>生成对抗网络七日打卡营</li>
-</ol>
-<h2 id="papers-2">📄 Papers</h2>
-<ol>
-<li>FashionGAN: Display your fashion design using Conditional Generative Adversarial Nets</li>
-<li>Gans-based clothes design: Pattern maker is all you need to design clothing.</li>
-<li>Deepwear: a case study of collaborative design between human and artificial intelligence</li>
-<li>A Neural Algorithm of Artistic Style</li>
-<li>Fashion Style Generator</li>
-</ol>
+</section>
 
               </div>
               <div class="toc-container">
                 <ul class="markdownIt-TOC">
-<li><a href="#week-6202145">Week 6（2021/4/5）</a>
-<ul>
-<li><a href="#books">📔 Books</a></li>
-<li><a href="#papers">📄 Papers</a></li>
-</ul>
-</li>
-<li><a href="#week-72021412">Week 7（2021/4/12）</a>
-<ul>
-<li><a href="#courses">🏫 Courses</a></li>
-<li><a href="#papers-2">📄 Papers</a></li>
-</ul>
-</li>
+<li><a href="#%E8%B5%84%E6%96%99">资料</a></li>
+<li><a href="#%E4%BD%86%E6%98%AF">但是</a></li>
 </ul>
 
               </div>
@@ -145,6 +124,15 @@ Week..." />
           </article>
         </div>
 
+        
+          <div class="next-post">
+            <div class="next">下一篇</div>
+            <a href="https://fox2049.github.io/post/ZAcqdAqnE/">
+              <h3 class="post-title">
+                深度照片风格迁移
+              </h3>
+            </a>
+          </div>
         
 
         
