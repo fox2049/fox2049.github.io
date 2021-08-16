@@ -1,47 +1,47 @@
 <?xml version="1.0" encoding="utf-8"?>
 <feed xmlns="http://www.w3.org/2005/Atom">
-    <id>https://fox2049.github.io</id>
+    <id>http://localhost:4000</id>
     <title>fox2049</title>
-    <updated>2021-08-16T04:20:29.172Z</updated>
+    <updated>2021-08-16T04:20:38.160Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
-    <link rel="alternate" href="https://fox2049.github.io"/>
-    <link rel="self" href="https://fox2049.github.io/atom.xml"/>
+    <link rel="alternate" href="http://localhost:4000"/>
+    <link rel="self" href="http://localhost:4000/atom.xml"/>
     <subtitle>Design with AI @ 文汇</subtitle>
-    <logo>https://fox2049.github.io/images/avatar.png</logo>
-    <icon>https://fox2049.github.io/favicon.ico</icon>
+    <logo>http://localhost:4000/images/avatar.png</logo>
+    <icon>http://localhost:4000/favicon.ico</icon>
     <rights>All rights reserved 2021, fox2049</rights>
     <entry>
         <title type="html"><![CDATA[理解PatchGAN]]></title>
-        <id>https://fox2049.github.io/post/DIhaDpMy0/</id>
-        <link href="https://fox2049.github.io/post/DIhaDpMy0/">
+        <id>http://localhost:4000/post/DIhaDpMy0/</id>
+        <link href="http://localhost:4000/post/DIhaDpMy0/">
         </link>
         <updated>2021-08-10T07:45:07.000Z</updated>
     </entry>
     <entry>
         <title type="html"><![CDATA[深度照片风格迁移]]></title>
-        <id>https://fox2049.github.io/post/ZAcqdAqnE/</id>
-        <link href="https://fox2049.github.io/post/ZAcqdAqnE/">
+        <id>http://localhost:4000/post/ZAcqdAqnE/</id>
+        <link href="http://localhost:4000/post/ZAcqdAqnE/">
         </link>
         <updated>2021-08-09T14:05:00.000Z</updated>
     </entry>
     <entry>
         <title type="html"><![CDATA[用于服装风格生成的深度学习]]></title>
-        <id>https://fox2049.github.io/post/EQPgHx7Pf/</id>
-        <link href="https://fox2049.github.io/post/EQPgHx7Pf/">
+        <id>http://localhost:4000/post/EQPgHx7Pf/</id>
+        <link href="http://localhost:4000/post/EQPgHx7Pf/">
         </link>
         <updated>2021-05-28T07:31:01.000Z</updated>
     </entry>
     <entry>
         <title type="html"><![CDATA[Gatys 风格迁移详解]]></title>
-        <id>https://fox2049.github.io/post/gatys_style/</id>
-        <link href="https://fox2049.github.io/post/gatys_style/">
+        <id>http://localhost:4000/post/gatys_style/</id>
+        <link href="http://localhost:4000/post/gatys_style/">
         </link>
         <updated>2021-04-18T14:22:39.000Z</updated>
     </entry>
     <entry>
         <title type="html"><![CDATA[GAN 的数学表示与推导]]></title>
-        <id>https://fox2049.github.io/post/math-under-gan/</id>
-        <link href="https://fox2049.github.io/post/math-under-gan/">
+        <id>http://localhost:4000/post/math-under-gan/</id>
+        <link href="http://localhost:4000/post/math-under-gan/">
         </link>
         <updated>2021-04-14T10:02:24.000Z</updated>
     </entry>

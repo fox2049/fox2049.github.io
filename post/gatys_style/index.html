@@ -3,10 +3,10 @@
     <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Gatys 风格迁移详解 | fox2049</title>
-<link rel="shortcut icon" href="https://fox2049.github.io/favicon.ico?v=1629087624119">
+<link rel="shortcut icon" href="http://localhost:4000/favicon.ico?v=1629087624081">
 <link href="https://cdn.jsdelivr.net/npm/remixicon@2.3.0/fonts/remixicon.css" rel="stylesheet">
-<link rel="stylesheet" href="https://fox2049.github.io/styles/main.css">
-<link rel="alternate" type="application/atom+xml" title="Gatys 风格迁移详解 | fox2049 - Atom Feed" href="https://fox2049.github.io/atom.xml">
+<link rel="stylesheet" href="http://localhost:4000/styles/main.css">
+<link rel="alternate" type="application/atom+xml" title="Gatys 风格迁移详解 | fox2049 - Atom Feed" href="http://localhost:4000/atom.xml">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Droid+Serif:400,700">
 
 
@@ -20,8 +20,8 @@
     <div class="main">
       <div class="main-content">
         <div class="site-header">
-  <a href="https://fox2049.github.io">
-  <img class="avatar" src="https://fox2049.github.io/images/avatar.png?v=1629087624119" alt="">
+  <a href="http://localhost:4000">
+  <img class="avatar" src="http://localhost:4000/images/avatar.png?v=1629087624081" alt="">
   </a>
   <h1 class="site-title">
     fox2049
@@ -82,13 +82,13 @@
                 6 min read
               </span>
               
-                <a href="https://fox2049.github.io/tag/zou8y9a4O/" class="post-tag">
+                <a href="http://localhost:4000/tag/zou8y9a4O/" class="post-tag">
                   # style
                 </a>
               
             </div>
             
-              <img class="post-feature-image" src="https://fox2049.github.io/post-images/gatys_style.png" alt="">
+              <img class="post-feature-image" src="http://localhost:4000/post-images/gatys_style.png" alt="">
             
             <div class="post-content-wrapper">
               <div class="post-content">
@@ -99,7 +99,7 @@
 <li>如何量化图片间的差异？</li>
 </ol>
 <h1 id="why">WHY</h1>
-<figure data-type="image" tabindex="1"><img src="https://fox2049.github.io/post-images/1618758169641.png" alt="" loading="lazy"></figure>
+<figure data-type="image" tabindex="1"><img src="http://localhost:4000/post-images/1618758169641.png" alt="" loading="lazy"></figure>
 <p>上图直观的表达出了图像在不同层的表现。Gatys 用了比较成熟的 VGG-19 作为 CNN，这个 CNN 有个非常奇妙的特性：</p>
 <ul>
 <li>内容层面：网络的底层特征更多的表现输入图像的像素信息，而高层特征更多的表现图像的物体和布局信息，通俗的来讲就是仅能够根据形状和位置判断图像信息，纹理和颜色信息丢失的比较严重。</li>
@@ -107,7 +107,7 @@
 </ul>
 <p>根据以上两个特性，噪音图像就有了可以对比和参考的对象。内容上选取一个高层的输出与“噪音图”进行对比，风格上使用多层的特征进行对比，最后加权确定图片的差异。</p>
 <h1 id="how">HOW</h1>
-<figure data-type="image" tabindex="2"><img src="https://fox2049.github.io/post-images/1618758250529.png" alt="" loading="lazy"></figure>
+<figure data-type="image" tabindex="2"><img src="http://localhost:4000/post-images/1618758250529.png" alt="" loading="lazy"></figure>
 <p>上图是论文中最为重要的一张图，通过这张图可以很清楚的看到图片迁移的具体步骤。其中 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mover accent="true"><mi>a</mi><mo>⃗</mo></mover></mrow><annotation encoding="application/x-tex">\vec{a}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.714em;vertical-align:0em;"></span><span class="mord accent"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.714em;"><span style="top:-3em;"><span class="pstrut" style="height:3em;"></span><span class="mord"><span class="mord mathdefault">a</span></span></span><span style="top:-3em;"><span class="pstrut" style="height:3em;"></span><span class="accent-body" style="left:-0.2355em;"><span class="overlay" style="height:0.714em;width:0.471em;"><svg width='0.471em' height='0.714em' style='width:0.471em' viewBox='0 0 471 714' preserveAspectRatio='xMinYMin'><path d='M377 20c0-5.333 1.833-10 5.5-14S391 0 397 0c4.667 0 8.667 1.667 12 5
 3.333 2.667 6.667 9 10 19 6.667 24.667 20.333 43.667 41 57 7.333 4.667 11
 10.667 11 18 0 6-1 10-3 12s-6.667 5-14 9c-28.667 14.667-53.667 35.667-75 63
@@ -281,7 +281,7 @@ c-16-25.333-24-45-24-59z'/></svg></span></span></span></span></span></span></spa
         
           <div class="next-post">
             <div class="next">下一篇</div>
-            <a href="https://fox2049.github.io/post/math-under-gan/">
+            <a href="http://localhost:4000/post/math-under-gan/">
               <h3 class="post-title">
                 GAN 的数学表示与推导
               </h3>
@@ -293,7 +293,7 @@ c-16-25.333-24-45-24-59z'/></svg></span></span></span></span></span></span></spa
 
         <div class="site-footer">
   Powered by  <a href="https://github.com/getgridea/gridea" target="_blank">Gridea</a>
-  <a class="rss" href="https://fox2049.github.io/atom.xml" target="_blank">
+  <a class="rss" href="http://localhost:4000/atom.xml" target="_blank">
     <i class="ri-rss-line"></i> RSS
   </a>
 </div>
