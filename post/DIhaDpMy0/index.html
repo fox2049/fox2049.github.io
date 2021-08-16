@@ -3,7 +3,7 @@
     <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>理解PatchGAN | fox2049</title>
-<link rel="shortcut icon" href="https://fox2049.github.io/favicon.ico?v=1629083048115">
+<link rel="shortcut icon" href="https://fox2049.github.io/favicon.ico?v=1629086016346">
 <link href="https://cdn.jsdelivr.net/npm/remixicon@2.3.0/fonts/remixicon.css" rel="stylesheet">
 <link rel="stylesheet" href="https://fox2049.github.io/styles/main.css">
 <link rel="alternate" type="application/atom+xml" title="理解PatchGAN | fox2049 - Atom Feed" href="https://fox2049.github.io/atom.xml">
@@ -22,7 +22,7 @@
       <div class="main-content">
         <div class="site-header">
   <a href="https://fox2049.github.io">
-  <img class="avatar" src="https://fox2049.github.io/images/avatar.png?v=1629083048115" alt="">
+  <img class="avatar" src="https://fox2049.github.io/images/avatar.png?v=1629086016346" alt="">
   </a>
   <h1 class="site-title">
     fox2049
@@ -80,7 +80,7 @@
                 2021-08-10
               </span>
               <span>
-                2 min read
+                5 min read
               </span>
               
                 <a href="https://fox2049.github.io/tag/lk5u2jh2S/" class="post-tag">
@@ -106,6 +106,48 @@ PatchGAN和平常GAN的区别在于，平常的GAN输出的是一个标量，例
 <img src="https://fox2049.github.io/post-images/1628582812739.png" alt="" loading="lazy"></p>
 <p>注意，途中没有画出每层具体的特征层的3D图，请自行想象。<br>
 你所需要记住的就是特征层的层数，卷积核的尺寸，步长以及padding的值。</p>
+<p>从实现的角度来说，在最初的三个卷积层中（例如I →C1 →C2 →C3），设置 ** padding='same'**，* 即水平方向首先会在左右各加一个零，如果最后不够的话，会在右边再加零补齐，以满足最后一次完整的移动。对于垂直方向也是同理。* 在接下来的两个卷积层中（例如C3 →C4 →O）设置 ** padding='valid' *<em>，</em> 即会但只会抛弃最右边的列或者是最下面的行. * 并且仅在C3和C4中设置用0填充，确保在设置padding='valid' 前完成了结构中的零填充。</p>
+<h1 id="如果你熟悉cnn">如果你熟悉CNN</h1>
+<p>根据CNN中下一层尺寸的计算方法，可以根据卷积核的尺寸，步长以及padding的值计算出相应的输出层尺寸。如下图所示：<br>
+<img src="https://fox2049.github.io/post-images/1629084128897.png" alt="" loading="lazy"><br>
+输入的尺寸为256 x 256， 经过4 x 4的卷积核，步长为2，填充为1的卷积后，得到的尺寸为128 x 128。从而推出我们设置的PatchGAN的最终输出尺寸为30 x 30。</p>
+<h1 id="回溯">回溯</h1>
+<p>我们来理解一下区块即感受野的概念。</p>
+<h2 id="从到o到c4开始">从到'O'到'C4'开始</h2>
+<p>我们从输出层中摘出一个像素，一旦你理解了一个，你就能理解其它了。<br>
+<img src="https://fox2049.github.io/post-images/1629084499005.png" alt="" loading="lazy"></p>
+<p>C4经过padding为1，步长为1的卷积核为4 x 4处理后，原先4 x 4区域内的像素变为输出层中的一个像素。</p>
+<h2 id="从c4到c3">从'C4'到'C3'</h2>
+<figure data-type="image" tabindex="2"><img src="https://fox2049.github.io/post-images/1629084653777.png" alt="" loading="lazy"></figure>
+<p>C3中的4 x 4区域也会成为C4区域中的一个像素，因为步长为1，C3中每4 x 7个像素便会成为C4中的1 x 4个像素.进而得到，C3中的7 x 7区域内的像素，在输出层中会变为1个像素。输出层中一个像素对应在C3中的感受野为7 x 7。</p>
+<p>经过分析，我们得到一下的公式：<br>
+<img src="https://fox2049.github.io/post-images/1629084898190.png" alt="" loading="lazy"></p>
+<p>通过以上的公式，我们就能获得每层对应的感受野，例如从'O'到'C4'中的行中的一个像素为例， <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>K</mi><mo>=</mo><mn>4</mn></mrow><annotation encoding="application/x-tex">K=4</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.68333em;vertical-align:0em;"></span><span class="mord mathdefault" style="margin-right:0.07153em;">K</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.64444em;vertical-align:0em;"></span><span class="mord">4</span></span></span></span> ,  <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>S</mi><mo>=</mo><mn>1</mn></mrow><annotation encoding="application/x-tex">S= 1</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.68333em;vertical-align:0em;"></span><span class="mord mathdefault" style="margin-right:0.05764em;">S</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.64444em;vertical-align:0em;"></span><span class="mord">1</span></span></span></span> ,  <span class="katex"><span class="katex-mathml"><math><semantics><mrow><msub><mi>K</mi><mi>l</mi></msub><mo>=</mo><mn>1</mn></mrow><annotation encoding="application/x-tex">K_{l}=1</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.83333em;vertical-align:-0.15em;"></span><span class="mord"><span class="mord mathdefault" style="margin-right:0.07153em;">K</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.33610799999999996em;"><span style="top:-2.5500000000000003em;margin-left:-0.07153em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathdefault mtight" style="margin-right:0.01968em;">l</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.64444em;vertical-align:0em;"></span><span class="mord">1</span></span></span></span>，最终得到<span class="katex"><span class="katex-mathml"><math><semantics><mrow><msub><mi>K</mi><mrow><mi>l</mi><mo>−</mo><mn>1</mn></mrow></msub><mo>=</mo><mn>4</mn></mrow><annotation encoding="application/x-tex">K_{l-1}=4</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.891661em;vertical-align:-0.208331em;"></span><span class="mord"><span class="mord mathdefault" style="margin-right:0.07153em;">K</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.3361079999999999em;"><span style="top:-2.5500000000000003em;margin-left:-0.07153em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathdefault mtight" style="margin-right:0.01968em;">l</span><span class="mbin mtight">−</span><span class="mord mtight">1</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.208331em;"><span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.64444em;vertical-align:0em;"></span><span class="mord">4</span></span></span></span>。<br>
+<img src="https://fox2049.github.io/post-images/1629085278241.png" alt="" loading="lazy"><br>
+'C4'到'C3'也同理，只是C4中涉及的像素变为了4个，<span class="katex"><span class="katex-mathml"><math><semantics><mrow><msub><mi>K</mi><mi>l</mi></msub><mo>=</mo><mn>4</mn></mrow><annotation encoding="application/x-tex">K_{l}=4</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.83333em;vertical-align:-0.15em;"></span><span class="mord"><span class="mord mathdefault" style="margin-right:0.07153em;">K</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.33610799999999996em;"><span style="top:-2.5500000000000003em;margin-left:-0.07153em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathdefault mtight" style="margin-right:0.01968em;">l</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.64444em;vertical-align:0em;"></span><span class="mord">4</span></span></span></span>。<br>
+<img src="https://fox2049.github.io/post-images/1629085394145.png" alt="" loading="lazy"><br>
+如果将输出层中所有的30 x 30的像素全部计算，就可以得出'C4'的感受野应该为33 x 33。所以在进行Patch设置的时候，要考虑好每层的参数设置。</p>
+<h2 id="通过公式反推">通过公式反推</h2>
+<p>一步步进行反向推导，得到C1层的感受野为70 x 70.</p>
+<h1 id="代码">代码</h1>
+<p>使用tensorflow构建一个patchGAN模型：</p>
+<pre><code class="language-Python">
+def PatchGAN(inp_shape=(256,256,3)):
+    
+    model = tf.keras.models.Sequential()
+    model.add(tf.keras.layers.InputLayer(input_shape=inp_shape))
+    model.add(tf.keras.layers.Conv2D(filters=64, kernel_size=4, strides=2, padding='same', activation='relu'))
+    model.add(tf.keras.layers.Conv2D(filters=128, kernel_size=4, strides=2, padding='same', activation='relu'))
+    model.add(tf.keras.layers.Conv2D(filters=256, kernel_size=4, strides=2, padding='same', activation='relu'))
+    model.add(tf.keras.layers.ZeroPadding2D())
+    model.add(tf.keras.layers.Conv2D(filters=512, kernel_size=4, strides=1, padding='valid', activation='relu'))
+    model.add(tf.keras.layers.ZeroPadding2D())
+    model.add(tf.keras.layers.Conv2D(filters=1, kernel_size=4, strides=1, padding='valid', activation='sigmoid'))
+    
+    return model     
+</code></pre>
+<p>模型架构：<br>
+<img src="https://fox2049.github.io/post-images/1629086014230.png" alt="" loading="lazy"></p>
 <hr class="footnotes-sep">
 <section class="footnotes">
 <ol class="footnotes-list">
@@ -121,6 +163,15 @@ PatchGAN和平常GAN的区别在于，平常的GAN输出的是一个标量，例
                 <ul class="markdownIt-TOC">
 <li><a href="#%E8%B5%84%E6%96%99">资料</a></li>
 <li><a href="#%E4%BD%86%E6%98%AF">但是</a></li>
+<li><a href="#%E5%A6%82%E6%9E%9C%E4%BD%A0%E7%86%9F%E6%82%89cnn">如果你熟悉CNN</a></li>
+<li><a href="#%E5%9B%9E%E6%BA%AF">回溯</a>
+<ul>
+<li><a href="#%E4%BB%8E%E5%88%B0o%E5%88%B0c4%E5%BC%80%E5%A7%8B">从到'O'到'C4'开始</a></li>
+<li><a href="#%E4%BB%8Ec4%E5%88%B0c3">从'C4'到'C3'</a></li>
+<li><a href="#%E9%80%9A%E8%BF%87%E5%85%AC%E5%BC%8F%E5%8F%8D%E6%8E%A8">通过公式反推</a></li>
+</ul>
+</li>
+<li><a href="#%E4%BB%A3%E7%A0%81">代码</a></li>
 </ul>
 
               </div>
