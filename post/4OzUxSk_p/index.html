@@ -3,7 +3,7 @@
     <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>草稿与细化：拉普拉斯金字塔网络 | fox2049</title>
-<link rel="shortcut icon" href="https://fox2049.github.io/favicon.ico?v=1629639944501">
+<link rel="shortcut icon" href="https://fox2049.github.io/favicon.ico?v=1629641086801">
 <link href="https://cdn.jsdelivr.net/npm/remixicon@2.3.0/fonts/remixicon.css" rel="stylesheet">
 <link rel="stylesheet" href="https://fox2049.github.io/styles/main.css">
 <link rel="alternate" type="application/atom+xml" title="草稿与细化：拉普拉斯金字塔网络 | fox2049 - Atom Feed" href="https://fox2049.github.io/atom.xml">
@@ -22,7 +22,7 @@
       <div class="main-content">
         <div class="site-header">
   <a href="https://fox2049.github.io">
-  <img class="avatar" src="https://fox2049.github.io/images/avatar.png?v=1629639944501" alt="">
+  <img class="avatar" src="https://fox2049.github.io/images/avatar.png?v=1629641086801" alt="">
   </a>
   <h1 class="site-title">
     fox2049
@@ -100,6 +100,7 @@
 <img src="https://fox2049.github.io/post-images/1629639812323.jpeg" alt="" loading="lazy"><br>
 全局相似衡量图像之间统计意义上的相似性，跟局部对应没有关系；局部近似主要通过统计两个特征图的局部图像块之间的相似性。这两种方式分别与图形学里面纹理合成的参数化模型和非参数化模型相似，主要区别在于深度网络提高了提取的图像特征的表达性；原始的纹理合成的作用对象是图像空间，这里转移到了特征图空间。因此，全局相似和局部近似的区别与纹理合成中的这两种方式区别是一致的。 <sup class="footnote-ref"><a href="#fn1" id="fnref1">[1]</a></sup></p>
 </blockquote>
+<p>这个网络叫做Laplacian Pyramid Network(LapStyle)。首先，使用Drafting Network在低分辨率下做global的迁移，可以获得更大的感受野并且减少local细节的影响。接下来用一个Revision Network来细化高分辨率下local的细节，这两个统称为“Drafting and Revison”处理。</p>
 <hr class="footnotes-sep">
 <section class="footnotes">
 <ol class="footnotes-list">
