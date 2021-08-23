@@ -3,7 +3,7 @@
     <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>草稿与细化：拉普拉斯金字塔网络 | fox2049</title>
-<link rel="shortcut icon" href="https://fox2049.github.io/favicon.ico?v=1629641086801">
+<link rel="shortcut icon" href="https://fox2049.github.io/favicon.ico?v=1629702939323">
 <link href="https://cdn.jsdelivr.net/npm/remixicon@2.3.0/fonts/remixicon.css" rel="stylesheet">
 <link rel="stylesheet" href="https://fox2049.github.io/styles/main.css">
 <link rel="alternate" type="application/atom+xml" title="草稿与细化：拉普拉斯金字塔网络 | fox2049 - Atom Feed" href="https://fox2049.github.io/atom.xml">
@@ -12,7 +12,8 @@
 
 
     <meta name="description" content="原文链接：http://arxiv.org/abs/2104.05376
-神经网络风格迁移可以粗略的分为两种：image-optimization and model-optimization methods。Model-optimizat..." />
+介绍
+神经网络风格迁移可以粗略的分为两种：image-optimization and model-optimization methods。Model-optimi..." />
     <meta name="keywords" content="style" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
     <script src="https://cdn.bootcss.com/highlight.js/9.12.0/highlight.min.js"></script>
@@ -22,7 +23,7 @@
       <div class="main-content">
         <div class="site-header">
   <a href="https://fox2049.github.io">
-  <img class="avatar" src="https://fox2049.github.io/images/avatar.png?v=1629641086801" alt="">
+  <img class="avatar" src="https://fox2049.github.io/images/avatar.png?v=1629702939323" alt="">
   </a>
   <h1 class="site-title">
     fox2049
@@ -80,7 +81,7 @@
                 2021-08-22
               </span>
               <span>
-                2 min read
+                3 min read
               </span>
               
                 <a href="https://fox2049.github.io/tag/zou8y9a4O/" class="post-tag">
@@ -94,6 +95,7 @@
             <div class="post-content-wrapper">
               <div class="post-content">
                 <p>原文链接：<a href="http://arxiv.org/abs/2104.05376">http://arxiv.org/abs/2104.05376</a></p>
+<h1 id="介绍">介绍</h1>
 <p>神经网络风格迁移可以粗略的分为两种：image-optimization and model-optimization methods。Model-optimization methods下面有三个小类：Per-Style-Per-Model、Multi-Style-Per-Model与Arbitrary-Style-Per-Model。这些方法对于local style patterns可以很好的迁移，但是并不能很好的迁移兼具global and local的patterns。这篇论文主要目的就是为了使用FFN(feed-forward network)完成高质量的风格迁移，都可以在美学上保留local和gloal的patterns。</p>
 <blockquote>
 <p><img src="https://fox2049.github.io/post-images/1629639786505.jpeg" alt="" loading="lazy"><br>
@@ -101,6 +103,12 @@
 全局相似衡量图像之间统计意义上的相似性，跟局部对应没有关系；局部近似主要通过统计两个特征图的局部图像块之间的相似性。这两种方式分别与图形学里面纹理合成的参数化模型和非参数化模型相似，主要区别在于深度网络提高了提取的图像特征的表达性；原始的纹理合成的作用对象是图像空间，这里转移到了特征图空间。因此，全局相似和局部近似的区别与纹理合成中的这两种方式区别是一致的。 <sup class="footnote-ref"><a href="#fn1" id="fnref1">[1]</a></sup></p>
 </blockquote>
 <p>这个网络叫做Laplacian Pyramid Network(LapStyle)。首先，使用Drafting Network在低分辨率下做global的迁移，可以获得更大的感受野并且减少local细节的影响。接下来用一个Revision Network来细化高分辨率下local的细节，这两个统称为“Drafting and Revison”处理。</p>
+<h1 id="相关工作">相关工作</h1>
+<p>以往的缺点：expensive computational cost hinder practical applications.</p>
+<p>目标：improve run-time effeciency.</p>
+<p>使用model-optimization based 的方法可以在提高提高计算效率的同时兼顾图像质量。图像的纹理是分层次的，LapStyle可以捕捉不同层次的纹理提高效果。SinGAN用对抗金字塔网络捕捉不同图像的patch信息。WCT也能完成从粗糙到细致的工作，不过却是作用在原始的RGB域，不能像LapStyle一样在感受野内完成风格的细化。这篇论文可以做到** trade-off between run-time effeciency and visual quality **。</p>
+<h1 id="方法">方法</h1>
+<p>以两层金字塔为例</p>
 <hr class="footnotes-sep">
 <section class="footnotes">
 <ol class="footnotes-list">
@@ -111,7 +119,12 @@
 
               </div>
               <div class="toc-container">
-                
+                <ul class="markdownIt-TOC">
+<li><a href="#%E4%BB%8B%E7%BB%8D">介绍</a></li>
+<li><a href="#%E7%9B%B8%E5%85%B3%E5%B7%A5%E4%BD%9C">相关工作</a></li>
+<li><a href="#%E6%96%B9%E6%B3%95">方法</a></li>
+</ul>
+
               </div>
             </div>
           </article>
