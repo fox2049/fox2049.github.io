@@ -1,0 +1,188 @@
+<html>
+  <head>
+    <meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>福柯 | fox2049</title>
+<link rel="shortcut icon" href="https://fox2049.github.io/favicon.ico?v=1704705277418">
+<link href="https://cdn.jsdelivr.net/npm/remixicon@2.3.0/fonts/remixicon.css" rel="stylesheet">
+<link rel="stylesheet" href="https://fox2049.github.io/styles/main.css">
+<link rel="alternate" type="application/atom+xml" title="福柯 | fox2049 - Atom Feed" href="https://fox2049.github.io/atom.xml">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Droid+Serif:400,700">
+
+
+
+    <meta name="description" content="如果大家要读福柯的书，首先应该了解一下福柯的生平，知道他是一个什么样的人，所以《福柯的生死爱欲》是值得读的，然后进入福柯三件套——《规训与惩罚》、《疯癫与文明》与《性经验史》。再往后可以继续读《临床医学的诞生》，这本书讲述了科学性话语下临床..." />
+    <meta name="keywords" content="读书" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
+    <script src="//cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.5.1/build/highlight.min.js"></script>
+  </head>
+  <body>
+    <div class="main">
+      <div class="main-content">
+        <div class="site-header">
+  <a href="https://fox2049.github.io">
+  <img class="avatar" src="https://fox2049.github.io/images/avatar.png?v=1704705277418" alt="">
+  </a>
+  <h1 class="site-title">
+    fox2049
+  </h1>
+  <p class="site-description">
+    含哺而熙,鼓腹而游
+  </p>
+  <div class="menu-container">
+    
+      
+        <a href="/" class="menu">
+          首页
+        </a>
+      
+    
+      
+        <a href="/archives" class="menu">
+          归档
+        </a>
+      
+    
+      
+        <a href="https://fox2049.github.io/tags" class="menu">
+          标签
+        </a>
+      
+    
+      
+        <a href="https://fox2049.github.io/fodi" class="menu">
+          网盘
+        </a>
+      
+    
+  </div>
+  <div class="social-container">
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+  </div>
+</div>
+
+        <div class="post-detail">
+          <article class="post">
+            <h2 class="post-title">
+              福柯
+            </h2>
+            <div class="post-info">
+              <span>
+                2022-11-19
+              </span>
+              <span>
+                1 min read
+              </span>
+              
+                <a href="https://fox2049.github.io/tag/_qKmcPhV0/" class="post-tag">
+                  # 读书
+                </a>
+              
+            </div>
+            
+              <img class="post-feature-image" src="https://fox2049.github.io/post-images/fu-ke.jfif" alt="">
+            
+            <div class="post-content-wrapper">
+              <div class="post-content" v-pre>
+                <p>如果大家要读福柯的书，首先应该了解一下福柯的生平，知道他是一个什么样的人，所以《福柯的生死爱欲》是值得读的，然后进入福柯三件套——《规训与惩罚》、《疯癫与文明》与《性经验史》。再往后可以继续读《临床医学的诞生》，这本书讲述了科学性话语下临床医学背后的分类机制。福柯的文章非常多，例如《法兰西课程系列》可以找来看看。</p>
+
+              </div>
+              <div class="toc-container">
+                
+              </div>
+            </div>
+          </article>
+        </div>
+
+        
+
+        
+          
+            <link rel="stylesheet" href="https://unpkg.com/gitalk/dist/gitalk.css">
+<script src="https://unpkg.com/gitalk/dist/gitalk.min.js"></script>
+
+<div id="gitalk-container"></div>
+
+<script>
+
+  var gitalk = new Gitalk({
+    clientID: '36b3709f33b27cdb931a',
+    clientSecret: '001fd26c60b096dd94997cb680713f9cd0b4f9be',
+    repo: 'fox2049.github.io',
+    owner: 'fox2049',
+    admin: ['fox2049'],
+    id: (location.pathname).substring(0, 49),      // Ensure uniqueness and length less than 50
+    distractionFreeMode: false  // Facebook-like distraction free mode
+  })
+
+  gitalk.render('gitalk-container')
+
+</script>
+
+          
+
+          
+        
+
+        <div class="site-footer">
+  Powered by&ensp;<a href="https://pages.github.com/" target="_blank">Github Pages</a>
+  <a class="rss" href="https://fox2049.github.io/atom.xml" target="_blank">
+    <i class="ri-rss-line"></i> RSS
+  </a>
+</div>
+
+      </div>
+    </div>
+
+    <script>
+      hljs.initHighlightingOnLoad()
+
+      let mainNavLinks = document.querySelectorAll(".markdownIt-TOC a");
+
+      // This should probably be throttled.
+      // Especially because it triggers during smooth scrolling.
+      // https://lodash.com/docs/4.17.10#throttle
+      // You could do like...
+      // window.addEventListener("scroll", () => {
+      //    _.throttle(doThatStuff, 100);
+      // });
+      // Only not doing it here to keep this Pen dependency-free.
+
+      window.addEventListener("scroll", event => {
+        let fromTop = window.scrollY;
+
+        mainNavLinks.forEach((link, index) => {
+          let section = document.getElementById(decodeURI(link.hash).substring(1));
+          let nextSection = null
+          if (mainNavLinks[index + 1]) {
+            nextSection = document.getElementById(decodeURI(mainNavLinks[index + 1].hash).substring(1));
+          }
+          if (section.offsetTop <= fromTop) {
+            if (nextSection) {
+              if (nextSection.offsetTop > fromTop) {
+                link.classList.add("current");
+              } else {
+                link.classList.remove("current");    
+              }
+            } else {
+              link.classList.add("current");
+            }
+          } else {
+            link.classList.remove("current");
+          }
+        });
+      });
+
+    </script>
+  </body>
+</html>
