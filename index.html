@@ -1,0 +1,30 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="FOLD/LINE - dynamic pattern geometry study" />
+    <title>FOLD / LINE - Dynamic Pattern Geometry</title>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <div class="screen" id="screen">
+      <canvas id="line-field" aria-label="由直线、贝塞尔曲线和样条组成的动态抽象服装样板"></canvas>
+      <div class="grain" aria-hidden="true"></div>
+      <div class="edge-frame" aria-hidden="true"></div>
+
+      <header class="site-header">
+        <a class="wordmark" href="#line-field" aria-label="FOLD LINE 首页">FOLD<span>/</span>LINE</a>
+        <p class="studio-meta">DIGITAL PATTERN PRACTICE<br />SHANGHAI / 2026</p>
+      </header>
+
+      <main class="visually-hidden">
+        <h1>Dynamic pattern geometry</h1>
+        <p>抽象服装样板线条在持续运动，并响应鼠标力场。</p>
+      </main>
+
+      <div class="pointer-marker" id="pointer-marker" aria-hidden="true"><i></i></div>
+    </div>
+    <script src="script.js"></script>
+  </body>
+</html>
