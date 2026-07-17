@@ -45,6 +45,7 @@ a { color: inherit; text-decoration: none; }
   width: 100%;
   height: 100%;
   touch-action: none;
+  cursor: none;
 }
 
 .grain {
@@ -180,6 +181,15 @@ a { color: inherit; text-decoration: none; }
 
 .screen.is-active .pointer-marker { opacity: 1; }
 .screen.is-pressed .pointer-marker { width: 30px; height: 30px; }
+.screen.is-point-hover .pointer-marker {
+  border-color: var(--cyan);
+  border-radius: 50%;
+}
+.screen.is-dragging .pointer-marker {
+  width: 34px;
+  height: 34px;
+  border-color: var(--cyan);
+}
 
 @media (hover: none), (pointer: coarse) {
   .pointer-marker { display: none; }
