@@ -3,19 +3,15 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta name="description" content="东华大学 SVG 空心字形校对" />
-    <title>东华大学 - SVG 字形校对</title>
-    <link rel="stylesheet" href="style.css?v=bezier-force-3" />
+    <meta name="description" content="影迹 · 流动的光影海报墙" />
+    <title>影迹</title>
+    <link rel="stylesheet" href="style.css" />
   </head>
   <body>
-    <main class="glyph-proof" aria-label="东华大学 SVG 空心字形校对">
-      <div class="glyph-grid" aria-label="东华大学四个空心字，分别位于页面四个象限">
-        <div class="glyph-cell" data-glyph-src="glyphs/dong.svg?v=4" role="img" aria-label="东"></div>
-        <div class="glyph-cell" data-glyph-src="glyphs/hua.svg?v=4" role="img" aria-label="华"></div>
-        <div class="glyph-cell" data-glyph-src="glyphs/da.svg?v=4" role="img" aria-label="大"></div>
-        <div class="glyph-cell" data-glyph-src="glyphs/xue.svg?v=4" role="img" aria-label="学"></div>
-      </div>
-    </main>
-    <script src="script.js?v=bezier-force-4"></script>
+    <div class="stage" id="stage" aria-label="动态电影海报墙">
+      <div class="vignette" aria-hidden="true"></div>
+      <div class="loader" id="loader">正在展开光影…</div>
+    </div>
+    <script src="script.js"></script>
   </body>
 </html>

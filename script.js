@@ -1,218 +1,140 @@
 (() => {
-  const cells = [...document.querySelectorAll('[data-glyph-src]')];
-  const glyphStates = [];
-  const fieldRadius = 96;
-  const maximumDisplacement = 42;
-  let animationFrame = 0;
-  let controlIndex = 0;
+  const stage = document.getElementById('stage');
+  const loader = document.getElementById('loader');
 
-  function parsePoint(value) {
-    const [x, y] = value.split(',').map(Number);
-    return { x, y };
-  }
+  const TARGET = 10;
+  const posters = [];
+  const tiles = new Set();
+  const pool = [];
+  let cursor = 0;
+  let timer = 0;
 
-  function pathPoint(point) {
-    return `${point.x.toFixed(2)} ${point.y.toFixed(2)}`;
-  }
+  const rand = (min, max) => min + Math.random() * (max - min);
 
-  function makeControl(base, circle, handle, segment) {
+  function sizeRange() {
+    const viewport = Math.min(window.innerWidth, 900);
     return {
-      base,
-      current: { ...base },
-      velocity: { x: 0, y: 0 },
-      glow: 0,
-      circle,
-      handle,
-      segment,
-      index: controlIndex++,
+      minWidth: Math.max(110, viewport * 0.14),
+      maxWidth: Math.min(250, viewport * 0.34),
     };
   }
 
-  function syncSegment(segment) {
-    segment.path.setAttribute(
-      'd',
-      `M${pathPoint(segment.p0)}C${pathPoint(segment.c1.current)} ${pathPoint(segment.c2.current)} ${pathPoint(segment.p3)}`,
-    );
-
-    segment.handle1.setAttribute('x1', segment.p0.x);
-    segment.handle1.setAttribute('y1', segment.p0.y);
-    segment.handle1.setAttribute('x2', segment.c1.current.x);
-    segment.handle1.setAttribute('y2', segment.c1.current.y);
-    segment.handle2.setAttribute('x1', segment.p3.x);
-    segment.handle2.setAttribute('y1', segment.p3.y);
-    segment.handle2.setAttribute('x2', segment.c2.current.x);
-    segment.handle2.setAttribute('y2', segment.c2.current.y);
-
-    segment.c1.circle.setAttribute('cx', segment.c1.current.x);
-    segment.c1.circle.setAttribute('cy', segment.c1.current.y);
-    segment.c2.circle.setAttribute('cx', segment.c2.current.x);
-    segment.c2.circle.setAttribute('cy', segment.c2.current.y);
+  function nextPoster() {
+    if (cursor >= pool.length) {
+      const shown = new Set(Array.from(tiles).map((el) => el.dataset.src));
+      const remaining = posters.filter((p) => !shown.has(p.src));
+      pool.length = 0;
+      pool.push(...(remaining.length ? remaining : posters));
+      for (let i = pool.length - 1; i > 0; i -= 1) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [pool[i], pool[j]] = [pool[j], pool[i]];
+      }
+      cursor = 0;
+    }
+    return pool[cursor++];
   }
 
-  function styleControl(control) {
-    const energy = control.glow;
-    if (energy < 0.008) {
-      control.circle.style.fill = '#e7e4db';
-      control.circle.style.fillOpacity = '0.92';
-      control.circle.style.filter = 'none';
-      control.handle.style.strokeOpacity = '0.48';
-      control.handle.style.strokeWidth = '1';
+  function spawnTile() {
+    const poster = nextPoster();
+    const posterUrl = poster.url || '';
+    const posterTitle = poster.title ? poster.title.split(' / ')[0] : '';
+    const src = poster.src;
+    const { minWidth, maxWidth } = sizeRange();
+    const width = rand(minWidth, maxWidth);
+    const height = width * 1.5;
+    const rot = rand(-5, 5);
+    const left = rand(0, 90);
+    const top = rand(0, 82);
+
+    const el = document.createElement('div');
+    el.className = 'tile';
+    el.dataset.src = src;
+    el.style.width = `${width.toFixed(0)}px`;
+    el.style.height = `${height.toFixed(0)}px`;
+    el.style.left = `${left.toFixed(1)}%`;
+    el.style.top = `${top.toFixed(1)}%`;
+    el.style.setProperty('--rot', `${rot.toFixed(1)}deg`);
+    el.style.animationDuration = `${rand(6, 12).toFixed(1)}s`;
+    el.style.animationDelay = `${(-rand(0, 8)).toFixed(1)}s`;
+
+    el.addEventListener('click', () => {
+      if (posterUrl) window.open(posterUrl, '_blank', 'noopener');
+    });
+    el.style.cursor = 'pointer';
+    el.title = posterTitle;
+
+    const img = document.createElement('img');
+    img.alt = '';
+    img.draggable = false;
+    img.addEventListener('error', () => {
+      el.classList.add('is-leaving');
+      setTimeout(() => {
+        tiles.delete(el);
+        el.remove();
+      }, 900);
+    });
+    img.src = src;
+
+    el.appendChild(img);
+    stage.appendChild(el);
+    tiles.add(el);
+
+    requestAnimationFrame(() => requestAnimationFrame(() => {
+      el.classList.add('is-visible');
+    }));
+
+    return el;
+  }
+
+  function removeRandomTile() {
+    const entries = Array.from(tiles);
+    if (!entries.length) return;
+    const el = entries[Math.floor(Math.random() * entries.length)];
+    el.classList.remove('is-visible');
+    el.classList.add('is-leaving');
+    tiles.delete(el);
+    setTimeout(() => el.remove(), 1000);
+  }
+
+  function tick() {
+    clearTimeout(timer);
+    timer = setTimeout(() => {
+      if (tiles.size < TARGET) {
+        spawnTile();
+      } else {
+        removeRandomTile();
+        spawnTile();
+      }
+      tick();
+    }, rand(1300, 3600));
+  }
+
+  async function init() {
+    try {
+      const response = await fetch('data/movies.json');
+      if (!response.ok) throw new Error(String(response.status));
+      const movies = await response.json();
+      for (const movie of movies) {
+        if (movie.poster) {
+          posters.push({ src: movie.poster, url: movie.url, title: movie.title });
+        }
+      }
+      if (!posters.length) throw new Error('empty');
+    } catch (error) {
+      console.error(error);
+      loader.textContent = '数据加载失败';
       return;
     }
 
-    const glowRadius = 2 + energy * 7;
-    const glowOpacity = 0.2 + energy * 0.58;
-    control.circle.style.fill = '#d9ff48';
-    control.circle.style.fillOpacity = `${0.2 + energy * 0.75}`;
-    control.circle.style.strokeOpacity = `${0.74 + energy * 0.26}`;
-    control.circle.style.filter = `drop-shadow(0 0 ${glowRadius.toFixed(2)}px rgba(217, 255, 72, ${glowOpacity.toFixed(2)}))`;
-    control.handle.style.strokeOpacity = `${0.48 + energy * 0.38}`;
-    control.handle.style.strokeWidth = `${1 + energy * 0.55}`;
+    for (let i = 0; i < TARGET; i += 1) spawnTile();
+    loader.classList.add('is-done');
+    tick();
   }
 
-  function updateControl(control, pointer) {
-    let targetX = control.base.x;
-    let targetY = control.base.y;
-    let targetGlow = 0;
-
-    if (pointer) {
-      let dx = control.base.x - pointer.x;
-      let dy = control.base.y - pointer.y;
-      let distance = Math.hypot(dx, dy);
-
-      if (distance < fieldRadius) {
-        if (distance < 0.001) {
-          const angle = control.index * 2.39996;
-          dx = Math.cos(angle);
-          dy = Math.sin(angle);
-          distance = 1;
-        }
-        const influence = Math.pow(1 - distance / fieldRadius, 2);
-        targetX += (dx / distance) * maximumDisplacement * influence;
-        targetY += (dy / distance) * maximumDisplacement * influence;
-        targetGlow = influence;
-      }
-    }
-
-    control.velocity.x += (targetX - control.current.x) * 0.105;
-    control.velocity.y += (targetY - control.current.y) * 0.105;
-    control.velocity.x *= 0.74;
-    control.velocity.y *= 0.74;
-    control.current.x += control.velocity.x;
-    control.current.y += control.velocity.y;
-    control.glow += (targetGlow - control.glow) * 0.18;
-
-    const positionDelta = Math.abs(targetX - control.current.x) + Math.abs(targetY - control.current.y);
-    const velocity = Math.abs(control.velocity.x) + Math.abs(control.velocity.y);
-    const glowDelta = Math.abs(targetGlow - control.glow);
-
-    if (!pointer && positionDelta < 0.006 && velocity < 0.006 && control.glow < 0.006) {
-      control.current.x = control.base.x;
-      control.current.y = control.base.y;
-      control.velocity.x = 0;
-      control.velocity.y = 0;
-      control.glow = 0;
-    }
-
-    styleControl(control);
-    return positionDelta > 0.004 || velocity > 0.004 || glowDelta > 0.004;
-  }
-
-  function render() {
-    animationFrame = 0;
-    let keepAnimating = false;
-
-    for (const state of glyphStates) {
-      const dirtySegments = new Set();
-      for (const control of state.controls) {
-        if (updateControl(control, state.pointer)) {
-          dirtySegments.add(control.segment);
-          keepAnimating = true;
-        }
-      }
-      for (const segment of dirtySegments) syncSegment(segment);
-    }
-
-    if (keepAnimating) animationFrame = window.requestAnimationFrame(render);
-  }
-
-  function scheduleRender() {
-    if (!animationFrame) animationFrame = window.requestAnimationFrame(render);
-  }
-
-  function pointerInSvg(svg, event) {
-    const point = svg.createSVGPoint();
-    point.x = event.clientX;
-    point.y = event.clientY;
-    const matrix = svg.getScreenCTM();
-    return matrix ? point.matrixTransform(matrix.inverse()) : null;
-  }
-
-  function initializeGlyph(svg) {
-    const controls = [];
-    const state = { svg, controls, pointer: null };
-    const cubicSegments = [...svg.querySelectorAll('.cubic-segment')];
-
-    for (const path of cubicSegments) {
-      const id = path.dataset.segment;
-      const handle1 = svg.querySelector(`.control-handle[data-segment="${id}"][data-handle="c1"]`);
-      const handle2 = svg.querySelector(`.control-handle[data-segment="${id}"][data-handle="c2"]`);
-      const circle1 = svg.querySelector(`.control-point[data-segment="${id}"][data-control="c1"]`);
-      const circle2 = svg.querySelector(`.control-point[data-segment="${id}"][data-control="c2"]`);
-      const segment = {
-        path,
-        p0: parsePoint(path.dataset.p0),
-        p3: parsePoint(path.dataset.p3),
-        handle1,
-        handle2,
-        c1: null,
-        c2: null,
-      };
-
-      segment.c1 = makeControl(parsePoint(path.dataset.c1), circle1, handle1, segment);
-      segment.c2 = makeControl(parsePoint(path.dataset.c2), circle2, handle2, segment);
-      controls.push(segment.c1, segment.c2);
-      syncSegment(segment);
-    }
-
-    glyphStates.push(state);
-  }
-
-  function clearPointers() {
-    for (const state of glyphStates) state.pointer = null;
-    scheduleRender();
-  }
-
-  document.addEventListener('pointermove', (event) => {
-    for (const state of glyphStates) {
-      const bounds = state.svg.getBoundingClientRect();
-      const inside = event.clientX >= bounds.left
-        && event.clientX <= bounds.right
-        && event.clientY >= bounds.top
-        && event.clientY <= bounds.bottom;
-      state.pointer = inside ? pointerInSvg(state.svg, event) : null;
-    }
-    scheduleRender();
-  }, { passive: true });
-
-  document.documentElement.addEventListener('pointerleave', clearPointers);
-  window.addEventListener('blur', clearPointers);
-
-  async function loadGlyph(cell) {
-    const response = await fetch(cell.dataset.glyphSrc, { cache: 'no-cache' });
-    if (!response.ok) throw new Error(`Unable to load ${cell.dataset.glyphSrc}`);
-    const source = await response.text();
-    const documentNode = new DOMParser().parseFromString(source, 'image/svg+xml');
-    if (documentNode.querySelector('parsererror')) throw new Error(`Invalid SVG: ${cell.dataset.glyphSrc}`);
-
-    const svg = document.importNode(documentNode.documentElement, true);
-    svg.setAttribute('aria-hidden', 'true');
-    svg.removeAttribute('role');
-    cell.replaceChildren(svg);
-    initializeGlyph(svg);
-  }
-
-  Promise.all(cells.map(loadGlyph)).catch((error) => {
-    console.error(error);
+  window.addEventListener('resize', () => {
+    if (tiles.size >= TARGET) return;
+    while (tiles.size < TARGET) spawnTile();
   });
+
+  init();
 })();
