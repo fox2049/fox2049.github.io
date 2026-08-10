@@ -10,14 +10,20 @@
   <body>
     <div class="stage" id="stage" aria-label="动态电影海报墙">
       <div class="vignette" aria-hidden="true"></div>
-      <div class="glass-pane" id="glass" aria-hidden="true"></div>
-      <div class="loader" id="loader">正在展开光影…</div>
+      <div class="glass-pane" id="glass" aria-hidden="true">
+        <div class="glass-lines">
+          <p class="glass-line">含哺而熙</p>
+          <p class="glass-line">鼓腹而游</p>
+        </div>
+      </div>
     </div>
+    <div class="page-credit" aria-hidden="true">fox2049@dhu</div>
+    <button class="theme-toggle" id="theme-toggle" aria-label="切换黑白背景"></button>
     <svg xmlns="http://www.w3.org/2000/svg" width="0" height="0" style="position: absolute" color-interpolation-filters="sRGB" aria-hidden="true">
       <defs id="svg-defs"></defs>
     </svg>
 
-    <script src="script.js?v=2"></script>
-    <script src="glass.js?v=2"></script>
+    <script src="script.js?v=3"></script>
+    <script src="glass.js?v=3"></script>
   </body>
 </html>

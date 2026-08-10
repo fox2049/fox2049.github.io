@@ -1,6 +1,5 @@
 (() => {
   const stage = document.getElementById('stage');
-  const loader = document.getElementById('loader');
 
   const posters = [];
   const pool = [];
@@ -21,7 +20,7 @@
   }
 
   function targetCount() {
-    return Math.max(18, Math.round((window.innerWidth * window.innerHeight) / 30000));
+    return Math.max(14, Math.min(36, Math.round((window.innerWidth * window.innerHeight) / 34000)));
   }
 
   function nextPoster() {
@@ -48,7 +47,7 @@
     const rot = rand(-8, 8);
     const x = rand(0, Math.max(0, window.innerWidth - width));
     const speed = 10 + depth * 60;
-    const blur = (1 - depth) * 2.6;
+    const blur = (1 - depth) * 2.0;
     const bright = 0.82 + depth * 0.18;
     const opacity = 0.7 + depth * 0.3;
     const y = fromTop
@@ -60,7 +59,7 @@
     el.dataset.src = poster.src;
     el.style.width = `${width.toFixed(0)}px`;
     el.style.height = `${height.toFixed(0)}px`;
-    el.style.willChange = 'transform, filter, opacity';
+    el.style.willChange = 'transform, opacity';
     el.style.zIndex = String(Math.round(depth * 40));
     el.style.setProperty('--dblur', `${blur.toFixed(1)}px`);
     el.style.setProperty('--dbright', bright.toFixed(2));
@@ -69,6 +68,7 @@
     const img = document.createElement('img');
     img.alt = '';
     img.draggable = false;
+    img.decoding = 'async';
     img.addEventListener('error', () => {
       tiles.delete(data);
       el.remove();
@@ -154,13 +154,34 @@
       if (!posters.length) throw new Error('empty');
     } catch (error) {
       console.error(error);
-      loader.textContent = '数据加载失败';
       return;
     }
 
-    loader.classList.add('is-done');
     start();
   }
 
   init();
+
+  (function setupTheme() {
+    const button = document.getElementById('theme-toggle');
+    function apply(theme) {
+      document.body.dataset.theme = theme;
+      button.textContent = theme === 'light' ? '🌙' : '☀';
+      try {
+        localStorage.setItem('theme', theme);
+      } catch (error) {
+        /* ignore */
+      }
+    }
+    let saved = 'dark';
+    try {
+      saved = localStorage.getItem('theme') || 'dark';
+    } catch (error) {
+      /* ignore */
+    }
+    apply(saved);
+    button.addEventListener('click', () => {
+      apply(document.body.dataset.theme === 'light' ? 'dark' : 'light');
+    });
+  })();
 })();

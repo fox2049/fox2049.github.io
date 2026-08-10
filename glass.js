@@ -1,4 +1,4 @@
-(() => {
+﻿(() => {
   const glass = document.getElementById('glass');
   if (!glass) return;
 
@@ -130,12 +130,36 @@
     ior: 3.0,
     scaleRatio: 1.0,
     blurAmount: 1.0,
+    blurHover: 5.0,
     specularOpacity: 0.5,
     specularSaturation: 4,
     radius: 60,
     tintOpacity: 6,
     outerShadowBlur: 26,
   };
+
+  let blurNode = null;
+  let blurCurrent = SETTINGS.blurAmount;
+  let blurRaf = 0;
+
+  function setBlur(value) {
+    if (blurNode) blurNode.setAttribute('stdDeviation', value.toFixed(3));
+  }
+
+  function animateBlur(to) {
+    cancelAnimationFrame(blurRaf);
+    const from = blurCurrent;
+    const duration = 420;
+    const start = performance.now();
+    function step(now) {
+      const t = Math.min((now - start) / duration, 1);
+      const ease = t < 0.5 ? 2 * t * t : 1 - Math.pow(-2 * t + 2, 2) / 2;
+      blurCurrent = from + (to - from) * ease;
+      setBlur(blurCurrent);
+      if (t < 1) blurRaf = requestAnimationFrame(step);
+    }
+    blurRaf = requestAnimationFrame(step);
+  }
 
   function rebuildFilter() {
     const w = Math.round(glass.offsetWidth);
@@ -159,7 +183,7 @@
 
     document.getElementById('svg-defs').innerHTML = `
       <filter id="liquid-glass-filter" x="0%" y="0%" width="100%" height="100%">
-        <feGaussianBlur in="SourceGraphic" stdDeviation="${SETTINGS.blurAmount}" result="blurred_source" />
+        <feGaussianBlur in="SourceGraphic" stdDeviation="${blurCurrent.toFixed(3)}" result="blurred_source" />
         <feImage href="${dispUrl}" x="0" y="0" width="${w}" height="${h}" result="disp_map" />
         <feDisplacementMap in="blurred_source" in2="disp_map" scale="${scale}" xChannelSelector="R" yChannelSelector="G" result="displaced" />
         <feColorMatrix in="displaced" type="saturate" values="${SETTINGS.specularSaturation}" result="displaced_sat" />
@@ -172,6 +196,8 @@
         <feBlend in="spec_faded" in2="with_sat" mode="normal" />
       </filter>
     `;
+    blurNode = document.querySelector('#liquid-glass-filter feGaussianBlur');
+    setBlur(blurCurrent);
   }
 
   function updateCSS() {
@@ -193,9 +219,13 @@
   window.addEventListener('resize', scheduleRebuild);
   updateCSS();
 
+  glass.addEventListener('mouseenter', () => animateBlur(SETTINGS.blurHover));
+  glass.addEventListener('mouseleave', () => animateBlur(SETTINGS.blurAmount));
+
   if (document.readyState === 'loading') {
     document.addEventListener('DOMContentLoaded', () => requestAnimationFrame(() => requestAnimationFrame(rebuildFilter)));
   } else {
     requestAnimationFrame(() => requestAnimationFrame(rebuildFilter));
   }
 })();
+
