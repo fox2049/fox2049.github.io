@@ -14,13 +14,13 @@
   function sizeRange() {
     const viewport = Math.min(window.innerWidth, 900);
     return {
-      minWidth: Math.max(96, viewport * 0.11),
-      maxWidth: Math.min(230, viewport * 0.3),
+      minWidth: Math.max(80, viewport * 0.08),
+      maxWidth: Math.min(170, viewport * 0.2),
     };
   }
 
   function targetCount() {
-    return Math.max(16, Math.min(50, Math.round((window.innerWidth * window.innerHeight) / 22000)));
+    return Math.max(14, Math.min(30, Math.round((window.innerWidth * window.innerHeight) / 36000)));
   }
 
   function nextPoster() {
@@ -38,21 +38,32 @@
     return pool[cursor++];
   }
 
+  function applyDepth(tile) {
+    const d = tile.depth;
+    tile.el.style.zIndex = String(Math.round(d * 40));
+    tile.el.style.setProperty('--dblur', `${((1 - d) * 2.0).toFixed(1)}px`);
+    tile.el.style.setProperty('--dbright', (0.82 + d * 0.18).toFixed(2));
+    tile.el.style.setProperty('--dopacity', (0.7 + d * 0.3).toFixed(2));
+  }
+
+  function pickX(width, height, depth, y) {
+    const viewportWidth = window.innerWidth;
+    return rand(0, Math.max(0, viewportWidth - width));
+  }
+
   function createTile(fromTop) {
     const poster = nextPoster();
     const { minWidth, maxWidth } = sizeRange();
-    const depth = Math.round(Math.random() * 2) / 2;
-    const width = rand(minWidth, maxWidth) * (0.72 + 0.55 * depth);
+    const roll = Math.random();
+    const depth = roll < 0.5 ? 1 : roll < 0.8 ? 0.5 : 0;
+    const width = rand(minWidth, maxWidth) * (0.75 + 0.4 * depth);
     const height = width * 1.5;
     const rot = rand(-8, 8);
-    const x = rand(0, Math.max(0, window.innerWidth - width));
     const speed = 10 + depth * 60;
-    const blur = (1 - depth) * 2.0;
-    const bright = 0.82 + depth * 0.18;
-    const opacity = 0.7 + depth * 0.3;
     const y = fromTop
       ? -height - rand(0, 120)
       : rand(-height, Math.max(0, window.innerHeight - height * 1.2));
+    const x = pickX(width, height, depth, y);
 
     const el = document.createElement('div');
     el.className = 'tile';
@@ -60,10 +71,6 @@
     el.style.width = `${width.toFixed(0)}px`;
     el.style.height = `${height.toFixed(0)}px`;
     el.style.willChange = 'transform, opacity';
-    el.style.zIndex = String(Math.round(depth * 40));
-    el.style.setProperty('--dblur', `${blur.toFixed(1)}px`);
-    el.style.setProperty('--dbright', bright.toFixed(2));
-    el.style.setProperty('--dopacity', opacity.toFixed(2));
 
     const img = document.createElement('img');
     img.alt = '';
@@ -79,13 +86,16 @@
     el.addEventListener('click', () => {
       if (poster.url) window.open(poster.url, '_blank', 'noopener');
     });
+    el.addEventListener('mouseenter', () => promoteTile(data));
+    el.addEventListener('mouseleave', () => releaseTile(data));
     el.style.cursor = 'pointer';
     el.title = poster.title ? poster.title.split(' / ')[0] : '';
 
-    const data = { el, img, x, y, rot, speed, width, height };
+    const data = { el, img, x, y, rot, speed, width, height, depth, falling: true, hovering: false };
     el._data = data;
     tiles.add(data);
     stage.appendChild(el);
+    applyDepth(data);
 
     if (reducedMotion) {
       data.y = rand(0, Math.max(0, window.innerHeight - height));
@@ -99,8 +109,31 @@
     return data;
   }
 
+  function promoteTile(tile) {
+    if (tile.hovering) return;
+    tile.hovering = true;
+    tile.originalDepth = tile.depth;
+    tile.falling = false;
+    tile.el.style.zIndex = '48';
+    tile.el.classList.add('is-promoted');
+    tile.el.style.setProperty('--dblur', '0px');
+    tile.el.style.setProperty('--dbright', '1');
+    tile.el.style.setProperty('--dopacity', '1');
+    setTransform(tile);
+  }
+
+  function releaseTile(tile) {
+    tile.hovering = false;
+    tile.depth = tile.originalDepth;
+    tile.falling = true;
+    tile.el.classList.remove('is-promoted');
+    applyDepth(tile);
+    setTransform(tile);
+  }
+
   function setTransform(tile) {
-    tile.el.style.transform = `translate3d(${tile.x.toFixed(1)}px, ${tile.y.toFixed(1)}px, 0) rotate(${tile.rot.toFixed(1)}deg)`;
+    const scale = tile.hovering ? 1.06 : 1;
+    tile.el.style.transform = `translate3d(${tile.x.toFixed(1)}px, ${tile.y.toFixed(1)}px, 0) rotate(${tile.rot.toFixed(1)}deg) scale(${scale})`;
   }
 
   function frame(now) {
@@ -109,15 +142,17 @@
     last = now;
 
     for (const tile of Array.from(tiles)) {
-      tile.y += tile.speed * dt;
-      if (tile.y > window.innerHeight + 40) {
-        tiles.delete(tile);
-        tile.el.classList.remove('is-visible');
-        tile.el.classList.add('is-leaving');
-        setTimeout(() => tile.el.remove(), 700);
-      } else {
-        setTransform(tile);
+      if (tile.falling) {
+        tile.y += tile.speed * dt;
+        if (tile.y > window.innerHeight + 40) {
+          tiles.delete(tile);
+          tile.el.classList.remove('is-visible');
+          tile.el.classList.add('is-leaving');
+          setTimeout(() => tile.el.remove(), 700);
+          continue;
+        }
       }
+      setTransform(tile);
     }
 
     while (tiles.size < targetCount()) createTile(true);
