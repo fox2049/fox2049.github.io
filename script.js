@@ -2,26 +2,31 @@
   const stage = document.getElementById('stage');
   const loader = document.getElementById('loader');
 
-  const TARGET = 10;
   const posters = [];
-  const tiles = new Set();
   const pool = [];
+  const tiles = new Set();
   let cursor = 0;
-  let timer = 0;
+  let raf = 0;
+  let last = 0;
+  let reducedMotion = false;
 
   const rand = (min, max) => min + Math.random() * (max - min);
 
   function sizeRange() {
     const viewport = Math.min(window.innerWidth, 900);
     return {
-      minWidth: Math.max(110, viewport * 0.14),
-      maxWidth: Math.min(250, viewport * 0.34),
+      minWidth: Math.max(96, viewport * 0.11),
+      maxWidth: Math.min(230, viewport * 0.3),
     };
+  }
+
+  function targetCount() {
+    return Math.max(18, Math.round((window.innerWidth * window.innerHeight) / 30000));
   }
 
   function nextPoster() {
     if (cursor >= pool.length) {
-      const shown = new Set(Array.from(tiles).map((el) => el.dataset.src));
+      const shown = new Set(Array.from(tiles).map((t) => t.el.dataset.src));
       const remaining = posters.filter((p) => !shown.has(p.src));
       pool.length = 0;
       pool.push(...(remaining.length ? remaining : posters));
@@ -34,82 +39,109 @@
     return pool[cursor++];
   }
 
-  function spawnTile() {
+  function createTile(fromTop) {
     const poster = nextPoster();
-    const posterUrl = poster.url || '';
-    const posterTitle = poster.title ? poster.title.split(' / ')[0] : '';
-    const src = poster.src;
     const { minWidth, maxWidth } = sizeRange();
-    const width = rand(minWidth, maxWidth);
+    const depth = Math.random();
+    const width = rand(minWidth, maxWidth) * (0.72 + 0.55 * depth);
     const height = width * 1.5;
-    const rot = rand(-5, 5);
-    const left = rand(0, 90);
-    const top = rand(0, 82);
+    const rot = rand(-8, 8);
+    const x = rand(0, Math.max(0, window.innerWidth - width));
+    const speed = 10 + depth * 60;
+    const blur = (1 - depth) * 2.6;
+    const bright = 0.82 + depth * 0.18;
+    const opacity = 0.7 + depth * 0.3;
+    const y = fromTop
+      ? -height - rand(0, 120)
+      : rand(-height, Math.max(0, window.innerHeight - height * 1.2));
 
     const el = document.createElement('div');
     el.className = 'tile';
-    el.dataset.src = src;
+    el.dataset.src = poster.src;
     el.style.width = `${width.toFixed(0)}px`;
     el.style.height = `${height.toFixed(0)}px`;
-    el.style.left = `${left.toFixed(1)}%`;
-    el.style.top = `${top.toFixed(1)}%`;
-    el.style.setProperty('--rot', `${rot.toFixed(1)}deg`);
-    el.style.animationDuration = `${rand(6, 12).toFixed(1)}s`;
-    el.style.animationDelay = `${(-rand(0, 8)).toFixed(1)}s`;
-
-    el.addEventListener('click', () => {
-      if (posterUrl) window.open(posterUrl, '_blank', 'noopener');
-    });
-    el.style.cursor = 'pointer';
-    el.title = posterTitle;
+    el.style.willChange = 'transform, filter, opacity';
+    el.style.zIndex = String(Math.round(depth * 40));
+    el.style.setProperty('--dblur', `${blur.toFixed(1)}px`);
+    el.style.setProperty('--dbright', bright.toFixed(2));
+    el.style.setProperty('--dopacity', opacity.toFixed(2));
 
     const img = document.createElement('img');
     img.alt = '';
     img.draggable = false;
     img.addEventListener('error', () => {
-      el.classList.add('is-leaving');
-      setTimeout(() => {
-        tiles.delete(el);
-        el.remove();
-      }, 900);
+      tiles.delete(data);
+      el.remove();
     });
-    img.src = src;
+    img.src = poster.src;
 
     el.appendChild(img);
+    el.addEventListener('click', () => {
+      if (poster.url) window.open(poster.url, '_blank', 'noopener');
+    });
+    el.style.cursor = 'pointer';
+    el.title = poster.title ? poster.title.split(' / ')[0] : '';
+
+    const data = { el, img, x, y, rot, speed, width, height };
+    el._data = data;
+    tiles.add(data);
     stage.appendChild(el);
-    tiles.add(el);
 
-    requestAnimationFrame(() => requestAnimationFrame(() => {
-      el.classList.add('is-visible');
-    }));
+    if (reducedMotion) {
+      data.y = rand(0, Math.max(0, window.innerHeight - height));
+      setTransform(data);
+      requestAnimationFrame(() => requestAnimationFrame(() => el.classList.add('is-visible')));
+      return data;
+    }
 
-    return el;
+    setTransform(data);
+    requestAnimationFrame(() => requestAnimationFrame(() => el.classList.add('is-visible')));
+    return data;
   }
 
-  function removeRandomTile() {
-    const entries = Array.from(tiles);
-    if (!entries.length) return;
-    const el = entries[Math.floor(Math.random() * entries.length)];
-    el.classList.remove('is-visible');
-    el.classList.add('is-leaving');
-    tiles.delete(el);
-    setTimeout(() => el.remove(), 1000);
+  function setTransform(tile) {
+    tile.el.style.transform = `translate3d(${tile.x.toFixed(1)}px, ${tile.y.toFixed(1)}px, 0) rotate(${tile.rot.toFixed(1)}deg)`;
   }
 
-  function tick() {
-    clearTimeout(timer);
-    timer = setTimeout(() => {
-      if (tiles.size < TARGET) {
-        spawnTile();
+  function frame(now) {
+    raf = 0;
+    const dt = Math.min((now - last) / 1000, 0.05);
+    last = now;
+
+    for (const tile of Array.from(tiles)) {
+      tile.y += tile.speed * dt;
+      if (tile.y > window.innerHeight + 40) {
+        tiles.delete(tile);
+        tile.el.classList.remove('is-visible');
+        tile.el.classList.add('is-leaving');
+        setTimeout(() => tile.el.remove(), 700);
       } else {
-        removeRandomTile();
-        spawnTile();
+        setTransform(tile);
       }
-      tick();
-    }, rand(1300, 3600));
+    }
+
+    while (tiles.size < targetCount()) createTile(true);
+
+    raf = requestAnimationFrame(frame);
   }
+
+  function start() {
+    last = performance.now();
+    const burst = Math.min(targetCount(), 26);
+    for (let i = 0; i < burst; i += 1) createTile(false);
+    while (tiles.size < targetCount()) createTile(true);
+    if (!reducedMotion) raf = requestAnimationFrame(frame);
+  }
+
+  window.addEventListener('resize', () => {
+    if (reducedMotion) {
+      for (const tile of tiles) setTransform(tile);
+    }
+  });
 
   async function init() {
+    reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
     try {
       const response = await fetch('data/movies.json');
       if (!response.ok) throw new Error(String(response.status));
@@ -126,15 +158,9 @@
       return;
     }
 
-    for (let i = 0; i < TARGET; i += 1) spawnTile();
     loader.classList.add('is-done');
-    tick();
+    start();
   }
-
-  window.addEventListener('resize', () => {
-    if (tiles.size >= TARGET) return;
-    while (tiles.size < TARGET) spawnTile();
-  });
 
   init();
 })();

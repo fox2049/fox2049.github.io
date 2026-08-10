@@ -10,8 +10,14 @@
   <body>
     <div class="stage" id="stage" aria-label="动态电影海报墙">
       <div class="vignette" aria-hidden="true"></div>
+      <div class="glass-pane" id="glass" aria-hidden="true"></div>
       <div class="loader" id="loader">正在展开光影…</div>
     </div>
-    <script src="script.js"></script>
+    <svg xmlns="http://www.w3.org/2000/svg" width="0" height="0" style="position: absolute" color-interpolation-filters="sRGB" aria-hidden="true">
+      <defs id="svg-defs"></defs>
+    </svg>
+
+    <script src="script.js?v=2"></script>
+    <script src="glass.js?v=2"></script>
   </body>
 </html>

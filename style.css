@@ -34,7 +34,7 @@ body {
 .vignette {
   position: absolute;
   inset: 0;
-  z-index: 10;
+  z-index: 45;
   pointer-events: none;
   background:
     radial-gradient(ellipse at center, transparent 55%, rgba(5, 6, 9, 0.72) 100%),
@@ -43,16 +43,17 @@ body {
 
 .tile {
   position: absolute;
+  top: 0;
+  left: 0;
   z-index: 1;
   border-radius: 10px;
   overflow: hidden;
   box-shadow: var(--shadow);
   border: 1px solid rgba(255, 255, 255, 0.08);
   opacity: 0;
-  transform: translateY(14px);
-  transition: opacity 0.9s var(--ease), transform 1.1s var(--ease), filter 0.9s ease;
-  animation: bob 7s ease-in-out infinite alternate;
-  will-change: transform, opacity;
+  filter: blur(var(--dblur, 0px)) brightness(var(--dbright, 1));
+  transition: opacity 0.9s var(--ease), filter 0.9s ease;
+  will-change: transform, opacity, filter;
 }
 
 .tile img {
@@ -65,29 +66,18 @@ body {
 }
 
 .tile.is-visible {
-  opacity: 1;
-  transform: translateY(0);
+  opacity: var(--dopacity, 1);
 }
 
 .tile.is-leaving {
   opacity: 0;
-  transform: translateY(10px) scale(0.94);
   filter: blur(6px);
 }
 
 .tile:hover {
-  filter: brightness(1.08);
+  filter: blur(var(--dblur, 0px)) brightness(calc(var(--dbright, 1) + 0.12));
   border-color: rgba(217, 255, 72, 0.4);
   z-index: 5;
-}
-
-@keyframes bob {
-  from {
-    transform: translateY(0) rotate(var(--rot, 0deg));
-  }
-  to {
-    transform: translateY(-14px) rotate(var(--rot, 0deg));
-  }
 }
 
 .loader {
@@ -123,11 +113,82 @@ body {
   50% { opacity: 1; transform: translateY(2px); }
 }
 
+/* Liquid glass pane */
+.glass-pane {
+  --glass-radius: 60px;
+  --glass-width: 320px;
+  --glass-height: 200px;
+  --tint-color: 255, 255, 255;
+  --tint-opacity: 0.06;
+  --shadow-blur: 20px;
+  --shadow-spread: -5px;
+  --shadow-color: rgba(255, 255, 255, 0.45);
+  --outer-shadow-blur: 26px;
+
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: var(--glass-width);
+  height: var(--glass-height);
+  max-width: 76vw;
+  max-height: 66vh;
+  border-radius: var(--glass-radius);
+  z-index: 50;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  isolation: isolate;
+  cursor: default;
+  box-shadow: 0 4px var(--outer-shadow-blur) rgba(0, 0, 0, 0.22);
+}
+
+.glass-pane::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  border-radius: inherit;
+  background-color: rgba(var(--tint-color), var(--tint-opacity));
+  box-shadow: inset 0 0 var(--shadow-blur) var(--shadow-spread) var(--shadow-color);
+  pointer-events: none;
+}
+
+.glass-pane::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  border-radius: inherit;
+  backdrop-filter: url(#liquid-glass-filter);
+  -webkit-backdrop-filter: url(#liquid-glass-filter);
+}
+
+.glass-label {
+  position: relative;
+  z-index: 2;
+  font-family: "Microsoft YaHei", "微软雅黑", "PingFang SC", system-ui, sans-serif;
+  font-weight: 600;
+  font-size: clamp(30px, 5vw, 46px);
+  letter-spacing: 0.14em;
+  text-indent: 0.14em;
+  color: rgba(255, 255, 255, 0.95);
+  text-shadow: 0 2px 24px rgba(0, 0, 0, 0.4), 0 1px 2px rgba(0, 0, 0, 0.45);
+  user-select: none;
+}
+
+@media (max-width: 640px) {
+  .glass-pane {
+    --glass-radius: 44px;
+    --glass-width: 240px;
+    --glass-height: 150px;
+  }
+}
+
 @media (prefers-reduced-motion: reduce) {
   .tile,
   .tile.is-visible,
   .tile.is-leaving {
     transition: opacity 0.6s ease;
-    animation: none;
   }
 }
