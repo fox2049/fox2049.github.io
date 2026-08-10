@@ -150,6 +150,8 @@ body[data-theme="light"] .glass-pane:hover::before {
   inset: 0;
   z-index: -1;
   border-radius: inherit;
+  overflow: hidden;
+  clip-path: inset(0 round var(--glass-radius));
   backdrop-filter: url(#liquid-glass-filter);
   -webkit-backdrop-filter: url(#liquid-glass-filter);
 }

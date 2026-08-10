@@ -166,7 +166,8 @@
     const h = Math.round(glass.offsetHeight);
     if (w < 2 || h < 2) return;
 
-    const radius = Math.min(SETTINGS.radius, Math.min(w, h) / 2 - 1);
+    const computedRadius = parseFloat(getComputedStyle(glass).getPropertyValue('--glass-radius'));
+    const radius = Math.min(computedRadius || SETTINGS.radius, Math.min(w, h) / 2 - 1);
     const clampedBezel = Math.min(SETTINGS.bezelWidth, radius - 1, Math.min(w, h) / 2 - 1);
 
     const profile = calculateRefractionProfile(
