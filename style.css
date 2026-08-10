@@ -154,69 +154,81 @@ body[data-theme="light"] .glass-pane:hover::before {
   -webkit-backdrop-filter: url(#liquid-glass-filter);
 }
 
-.glass-lines {
+.glass-center {
   position: relative;
   z-index: 2;
-  text-align: center;
   display: flex;
-  flex-direction: column;
-  gap: 16px;
-  padding: 10px 6px;
-  opacity: 0;
-  transform: translateY(10px);
-  transition: opacity 0.7s ease 0.3s, transform 0.7s ease 0.3s;
-  pointer-events: auto;
-  user-select: text;
-  -webkit-user-select: text;
+  align-items: center;
+  justify-content: center;
+  pointer-events: none;
 }
 
-.glass-pane:hover .glass-lines {
-  opacity: 1;
-  transform: translateY(0);
+.glass-circle {
+  position: relative;
+  width: 88px;
+  height: 88px;
+  border-radius: 50%;
+  padding: 3px;
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(255, 255, 255, 0.32);
+  box-shadow:
+    0 2px 14px rgba(0, 0, 0, 0.25),
+    inset 0 0 8px rgba(255, 255, 255, 0.08);
+  transform: translateY(-6px);
+  transition: transform 0.5s var(--ease);
 }
 
-.glass-line {
-  margin: 0;
-  font-family: "Microsoft YaHei", "PingFang SC", system-ui, sans-serif;
-  font-weight: 700;
-  font-size: clamp(24px, 3.6vw, 34px);
-  letter-spacing: 0.2em;
-  text-indent: 0.2em;
-  line-height: 1.7;
-  color: #ffffff;
-  text-shadow:
-    0 1px 2px rgba(0, 0, 0, 0.75),
-    0 2px 14px rgba(0, 0, 0, 0.45);
-  user-select: text;
-  -webkit-user-select: text;
+.glass-avatar {
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  object-fit: cover;
+  display: block;
+  user-select: none;
+  -webkit-user-select: none;
+  -webkit-user-drag: none;
 }
 
-body[data-theme="light"] .glass-line {
-  color: #101216;
-  text-shadow:
-    0 1px 2px rgba(255, 255, 255, 0.85),
-    0 2px 14px rgba(255, 255, 255, 0.45);
-}
-
-.page-credit {
-  position: fixed;
+.glass-name {
+  position: absolute;
+  top: 100%;
   left: 50%;
-  bottom: 18px;
-  transform: translateX(-50%);
-  z-index: 55;
+  transform: translate(-50%, 4px);
+  margin-top: 0;
+  margin-right: -0.1em;
+  white-space: nowrap;
+  text-align: center;
   font-family: "Microsoft YaHei", "PingFang SC", system-ui, sans-serif;
-  font-size: 13px;
-  font-weight: 500;
-  letter-spacing: 0.2em;
-  color: rgba(255, 255, 255, 0.55);
+  font-size: 21px;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  color: rgba(255, 255, 255, 0.92);
   text-shadow: 0 1px 3px rgba(0, 0, 0, 0.5);
-  pointer-events: auto;
+  opacity: 0;
+  transition: opacity 0.5s ease 0.12s, transform 0.5s ease 0.12s;
   user-select: text;
   -webkit-user-select: text;
 }
 
-body[data-theme="light"] .page-credit {
-  color: rgba(16, 18, 22, 0.55);
+.glass-pane:hover .glass-circle {
+  transform: translateY(-22px);
+}
+
+.glass-pane:hover .glass-name {
+  opacity: 1;
+  transform: translate(-50%, 0);
+}
+
+body[data-theme="light"] .glass-circle {
+  background: rgba(0, 0, 0, 0.03);
+  border-color: rgba(0, 0, 0, 0.22);
+  box-shadow:
+    0 2px 14px rgba(0, 0, 0, 0.12),
+    inset 0 0 8px rgba(255, 255, 255, 0.5);
+}
+
+body[data-theme="light"] .glass-name {
+  color: rgba(16, 18, 22, 0.9);
   text-shadow: 0 1px 3px rgba(255, 255, 255, 0.6);
 }
 
@@ -226,13 +238,20 @@ body[data-theme="light"] .page-credit {
     --glass-width: 240px;
     --glass-height: 150px;
   }
+  .glass-circle {
+    width: 68px;
+    height: 68px;
+  }
+  .glass-name {
+    font-size: 16px;
+  }
 }
 
 /* Theme toggle */
 .theme-toggle {
   position: fixed;
+  top: 16px;
   right: 16px;
-  bottom: 16px;
   z-index: 60;
   width: 46px;
   height: 46px;

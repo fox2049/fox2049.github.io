@@ -20,7 +20,7 @@
   }
 
   function targetCount() {
-    return Math.max(14, Math.min(36, Math.round((window.innerWidth * window.innerHeight) / 34000)));
+    return Math.max(16, Math.min(50, Math.round((window.innerWidth * window.innerHeight) / 22000)));
   }
 
   function nextPoster() {
@@ -41,7 +41,7 @@
   function createTile(fromTop) {
     const poster = nextPoster();
     const { minWidth, maxWidth } = sizeRange();
-    const depth = Math.random();
+    const depth = Math.round(Math.random() * 2) / 2;
     const width = rand(minWidth, maxWidth) * (0.72 + 0.55 * depth);
     const height = width * 1.5;
     const rot = rand(-8, 8);
